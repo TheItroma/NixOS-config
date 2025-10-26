@@ -1,0 +1,132 @@
+
+{ pkgs, ... }:
+{
+  environment.systemPackages = with pkgs; [
+    # Hypr
+    hyprsunset
+    hyprpicker
+    hyprshot
+
+    # File managers
+    yazi
+    nemo
+    
+    # Text editors
+    vim
+    neovim
+    obsidian
+
+    # Graphics editor
+    krita
+    inkscape
+    
+    # Music making
+    reaper
+    ardour
+    sfizz
+    
+    # Audio
+    alsa-utils
+    pavucontrol
+    qpwgraph
+    qjackctl
+    
+    # Players
+    playerctl # Cli player controller
+    rmpc # Customizable rust mpd tui
+    mpd # Music player daemon
+    spotify # Music player deamon and interface
+
+    # Rice tui
+    cava
+    fastfetch
+    tty-clock
+    cmatrix
+    cbonsai
+    
+    # Programing
+    rustup
+    
+    # Game Dev
+    godot
+    unityhub
+    blender
+    
+    # Privacy
+    mullvad
+    mullvad-vpn
+    tor-browser
+    librewolf
+    
+    # Wallpaper
+    waypaper
+    swww
+    mpvpaper
+
+    # Pywal
+    pywal16
+    pywalfox-native
+
+    # Viewers
+    zathura # PDF
+    nomacs # Image
+
+    # Communication
+    weechat
+    vesktop
+
+    # Login
+    sddm-sugar-dark
+    kdePackages.sddm
+
+    # Automation
+    openrgb
+    wtype
+
+    # Video
+    kdePackages.kdenlive # Editor
+    obs-studio # Capture
+    mpv # Player
+    stremio # Player
+    
+    # CAD
+    freecad-wayland
+    kicad-small
+
+    tealdeer # Tldr command
+    bat # A cat clone with wings
+    git # Versionning
+    dunst # Notifications
+    bluetui # bluetooth
+    waybar # Taskbar
+    protonup-qt # Gaming
+    rofi # Launcher
+    btop # Task manager
+    qbittorrent # Torrenting
+    kitty # Terminal
+    cliphist # Clipboard
+    wget # File fetcher
+    clang # C/C++ compiler
+
+
+    # ---------  FROM THE HOME MANAGER TEMPLATE THINGY --------
+    # Utils
+    ripgrep # recursively searches directories for a regex pattern
+    fzf # A command-line fuzzy finder
+
+    # networking tools
+    nmap # A utility for network discovery and security auditing
+
+    # nix related
+    #
+    # it provides the command `nom` works just like `nix`
+    # with more details log output
+    nix-output-monitor
+
+
+    # system tools
+    lm_sensors # for `sensors` command
+    pciutils # lspci
+    usbutils # lsusb
+  ];
+}
