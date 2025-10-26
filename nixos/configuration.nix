@@ -14,6 +14,12 @@
   programs.niri = {
     enable = true;
   };
+  programs.steam.enable = true;
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+    xwayland.enable = true;
+  };
   hardware.graphics = {
     enable = true;
   };
