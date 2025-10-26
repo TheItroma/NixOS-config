@@ -1,5 +1,5 @@
 {
-  description = "Your new nix config";
+  description = "Faucet's complete os configuration";
 
   inputs = {
 
@@ -14,20 +14,19 @@
   };
 
   outputs = { self, nixpkgs, home-manager, ... } @ inputs: {
-
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
 
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
         modules = [
-	  ./nixos/configuration.nix
-	  home-manager.nixosModules.home-manager {
-	    home-manager.useGlobalPkgs = true;
-	    home-manager.useUserPackages = true;
-	    home-manager.users.itroma = import ./home/home.nix;
-	  }
-	];
+          ./nixos/configuration.nix
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.itroma = import ./home/home.nix;
+          }
+        ];
       };
     };
   };

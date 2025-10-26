@@ -107,26 +107,13 @@
     cliphist # Clipboard
     wget # File fetcher
     clang # C/C++ compiler
-
-
-    # ---------  FROM THE HOME MANAGER TEMPLATE THINGY --------
-    # Utils
     ripgrep # recursively searches directories for a regex pattern
     fzf # A command-line fuzzy finder
-
-    # networking tools
     nmap # A utility for network discovery and security auditing
-
-    # nix related
-    #
-    # it provides the command `nom` works just like `nix`
-    # with more details log output
     nix-output-monitor
-
-
-    # system tools
     lm_sensors # for `sensors` command
     pciutils # lspci
     usbutils # lsusb
+    tree # I like it
   ];
 }
