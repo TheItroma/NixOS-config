@@ -12,6 +12,7 @@
 
   services.polkit-gnome.enable = true;
   programs.waybar.enable = true;
+  programs.niri.enable = true;
   programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
 
