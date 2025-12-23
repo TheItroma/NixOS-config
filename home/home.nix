@@ -10,8 +10,6 @@
     homeDirectory = "/home/itroma";
   };
 
-  services.polkit-gnome.enable = true;
-  programs.waybar.enable = true;
   programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
 

@@ -11,7 +11,10 @@
       ./packages.nix
     ];
 
+  security.polkit.enable = true;
+  programs.waybar.enable = true;
   programs.steam.enable = true;
+
   programs.hyprland = {
     enable = true;
     withUWSM = true;
