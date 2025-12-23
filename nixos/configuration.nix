@@ -87,6 +87,7 @@
     jack.enable = true;
   };
 
+  programs.niri.enable = true;
 
   users.users.itroma = {
     isNormalUser = true;
