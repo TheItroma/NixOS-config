@@ -1,8 +1,7 @@
-# This is your home-manager configuration file
-# Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 { inputs , lib , config , pkgs , ... }: {
+
   imports = [
-    ./niri/niri.nix
+    ./niri/default.nix
   ];
 
 
@@ -11,6 +10,8 @@
     homeDirectory = "/home/itroma";
   };
 
+  services.polkit-gnome.enable = true;
+  programs.waybar.enable = true;
   programs.neovim.enable = true;
   # home.packages = with pkgs; [ steam ];
 

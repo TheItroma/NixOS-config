@@ -12,7 +12,6 @@
     nemo
     
     # Text editors
-    vim
     neovim
     obsidian
 
@@ -98,7 +97,6 @@
     git # Versionning
     dunst # Notifications
     bluetui # bluetooth
-    waybar # Taskbar
     protonup-qt # Gaming
     rofi # Launcher
     btop # Task manager
@@ -115,5 +113,6 @@
     pciutils # lspci
     usbutils # lsusb
     tree # I like it
+    gamemode
   ];
 }
