@@ -2,20 +2,11 @@
 
   imports = [
     ./niri/default.nix
-    ./packages.nix
   ];
 
   services.polkit-gnome.enable = true;
   programs.waybar.enable = true;
-  programs.steam.enable = true;
-  programs.niri.enable = true;
 
-  wayland.windowManager.hyprland = {
-    enable = true;
-    package = pkgs.hyprland;
-    xwayland.enable = true;
-    systemd.enable = true;
-  };
 
   home = {
    username = "itroma";

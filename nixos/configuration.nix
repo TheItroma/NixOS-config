@@ -11,6 +11,15 @@
       ./packages.nix
     ];
 
+  programs.hyprland = {
+    enable = true;
+    xwayland.enable = true;
+  };
+
+  programs.niri.enable = true;
+  programs.steam.enable = true;
+
+
   hardware.graphics = {
     enable = true;
   };
@@ -27,6 +36,7 @@
       };
     };
   };
+
   services.xserver.videoDrivers = ["nvidia"];
   services.blueman.enable = true;
 
