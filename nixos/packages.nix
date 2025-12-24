@@ -114,5 +114,6 @@
     usbutils # lsusb
     tree # I like it
     gamemode
+    xwayland-satellite # XWayland support
   ];
 }
