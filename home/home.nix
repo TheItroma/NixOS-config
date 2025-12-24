@@ -2,11 +2,21 @@
 
   imports = [
     ./niri/default.nix
+    ./packages.nix
   ];
 
+  services.polkit-gnome.enable = true;
+  programs.waybar.enable = true;
+  programs.steam.enable = true;
+
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+    xwayland.enable = true;
+  };
 
   home = {
-    username = "itroma";
+   username = "itroma";
     homeDirectory = "/home/itroma";
   };
 
