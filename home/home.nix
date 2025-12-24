@@ -8,11 +8,13 @@
   services.polkit-gnome.enable = true;
   programs.waybar.enable = true;
   programs.steam.enable = true;
+  programs.niri.enable = true;
 
-  programs.hyprland = {
+  wayland.windowManager.hyprland = {
     enable = true;
-    withUWSM = true;
+    package = pkgs.hyprland;
     xwayland.enable = true;
+    systemd.enable = true;
   };
 
   home = {
