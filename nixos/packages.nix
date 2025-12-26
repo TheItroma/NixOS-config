@@ -92,6 +92,7 @@
     freecad-wayland
     kicad-small
 
+    cura-appimage # 3D printing slicer
     tealdeer # Tldr command
     bat # A cat clone with wings
     git # Versionning
