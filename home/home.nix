@@ -2,6 +2,7 @@
 
   imports = [
     ./niri/default.nix
+    ./hyprland/default.nix
   ];
 
   services.polkit-gnome.enable = true;
