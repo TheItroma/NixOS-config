@@ -19,7 +19,7 @@
 
   programs.niri.enable = true;
   programs.steam.enable = true;
-
+    
 
   hardware.graphics = {
     enable = true;
@@ -52,6 +52,7 @@
 
   nixpkgs.config = {
     allowUnfree = true;
+     segger-jlink.acceptLicense = true;
     permittedInsecurePackages = [
 	    # "qtwebengine-5.15.19"
       "mbedtls-2.28.10"
