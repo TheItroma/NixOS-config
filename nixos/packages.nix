@@ -92,6 +92,8 @@
     freecad-wayland
     kicad-small
 
+    slimevr # For da trackers
+    nrfconnect # NRF Connect
     cura-appimage # 3D printing slicer
     tealdeer # Tldr command
     bat # A cat clone with wings
