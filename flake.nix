@@ -4,16 +4,18 @@
   inputs = {
 
     # Nixpkgs
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # Home manager
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-unstable";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
   };
 
-  outputs = { self, nixpkgs, home-manager, ... } @ inputs: {
+  outputs = { self, nixpkgs, nixpkgs-xr, home-manager, ... } @ inputs: {
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
 
@@ -26,6 +28,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.itroma = import ./home/home.nix;
           }
+	  nixpkgs-xr.nixosModules.nixpkgs-xr
         ];
       };
     };

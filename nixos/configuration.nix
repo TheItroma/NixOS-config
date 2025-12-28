@@ -20,6 +20,12 @@
   programs.niri.enable = true;
   programs.steam.enable = true;
     
+  services.wivrn = {
+    enable = true;
+    openFirewall = true;
+    autoStart = true;
+    package = (pkgs.wivrn.override { cudaSupport = true; });
+  };
 
   hardware.graphics = {
     enable = true;
@@ -52,7 +58,6 @@
 
   nixpkgs.config = {
     allowUnfree = true;
-     segger-jlink.acceptLicense = true;
     permittedInsecurePackages = [
 	    # "qtwebengine-5.15.19"
       "mbedtls-2.28.10"
@@ -116,6 +121,7 @@
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
   
-  system.stateVersion = "25.05"; # Did you read the comment?
+
+  system.stateVersion = "25.05"; # Did you read the comment? Never change this
 
 }

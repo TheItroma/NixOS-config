@@ -1,0 +1,7 @@
+Setup ARMGDDN
+Setup https://github.com/louisa-uno/VRChatAnalyticsBlocklist
+Setup pihole with blacklist
+
+Cool stuff :
+https://gist.github.com/galister/1a971254af72bb2a5bc27740e984bce2
+https://github.com/d4rkc0d3r/d4rkAvatarOptimizer

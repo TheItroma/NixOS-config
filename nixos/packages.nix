@@ -92,8 +92,19 @@
     freecad-wayland
     kicad-small
 
-    slimevr # For da trackers
-    nrfconnect # NRF Connect
+    # VR
+    slimevr # Trackers
+    wlx-overlay-s # Vr desktop displayer
+    wayvr-dashboard # Vr application launcher (replaces steamvr)
+    vrc-get # Cli tool to inject vrc packages to unity
+    alcom # UI for vrc-get
+    xrizer # OpenVR -> OpenXR
+    # xrbinder # To bind stuff
+    proton-ge-rtsp-bin # It was in the nixpkgs-xr overlay sooo
+    umu-launcher # To use proton using non-steam games https://lvra.gitlab.io/docs/games/vr-no-steam/
+
+    screen # For serial coms
+    picocom # More serial coms
     cura-appimage # 3D printing slicer
     tealdeer # Tldr command
     bat # A cat clone with wings
