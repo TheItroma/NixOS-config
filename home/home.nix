@@ -21,8 +21,10 @@
   programs.home-manager.enable = true;
   programs.git = {
     enable = true;
-    userName = "TheItroma";
-    userEmail = "edmondliseuse@gmail.com";
+    settings {
+      user.name = "TheItroma";
+      user.email = "edmondliseuse@gmail.com";
+    };
   };
   # Nicely reload system units when changing configs
   systemd.user.startServices = "sd-switch";
