@@ -15,12 +15,16 @@
     nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-xr, home-manager, ... } @ inputs: {
-    # NixOS configuration entrypoint
-    # Available through 'nixos-rebuild --flake .#your-hostname'
-
+  outputs = { self, nixpkgs, nixpkgs-xr, home-manager, ... } @ inputs:
+  # NixOS configuration entrypoint
+  # Available through 'nixos-rebuild --flake .#your-hostname'
+  let
+    system = "x86_64-linux";
+  in
+  {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
+        system = system;
         modules = [
           ./nixos/configuration.nix
           home-manager.nixosModules.home-manager {
@@ -28,7 +32,7 @@
             home-manager.useUserPackages = true;
             home-manager.users.itroma = import ./home/home.nix;
           }
-	  nixpkgs-xr.nixosModules.nixpkgs-xr
+          nixpkgs-xr.nixosModules.nixpkgs-xr
         ];
       };
     };

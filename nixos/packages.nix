@@ -53,7 +53,6 @@
     blender
     
     # Privacy
-    mullvad
     mullvad-vpn
     tor-browser
     librewolf
@@ -83,7 +82,7 @@
     kdePackages.kdenlive # Editor
     obs-studio # Capture
     mpv # Player
-    stremio # Player
+	# stremio # Player
     
     # CAD
     freecad-wayland
@@ -100,7 +99,7 @@
 
     # Gaming
     gamemode # Better performances or whatever
-    proton-ge-rtsp-bin # It was in the nixpkgs-xr overlay sooo
+	# proton-ge-rtsp-bin # It was in the nixpkgs-xr overlay sooo
     protonup-qt # Just a gui for other proton installs
     umu-launcher # To use proton using non-steam games https://lvra.gitlab.io/docs/games/vr-no-steam/
 

@@ -59,7 +59,7 @@
   nixpkgs.config = {
     allowUnfree = true;
     permittedInsecurePackages = [
-      "mbedtls-2.28.10"
+	    # "mbedtls-2.28.10"
     ];
   };
 
