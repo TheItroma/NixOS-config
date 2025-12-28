@@ -59,7 +59,6 @@
   nixpkgs.config = {
     allowUnfree = true;
     permittedInsecurePackages = [
-      "qtwebengine-5.15.19"
       "mbedtls-2.28.10"
     ];
   };

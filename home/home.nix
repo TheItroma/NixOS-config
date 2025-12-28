@@ -21,7 +21,7 @@
   programs.home-manager.enable = true;
   programs.git = {
     enable = true;
-    settings {
+    settings = {
       user.name = "TheItroma";
       user.email = "edmondliseuse@gmail.com";
     };

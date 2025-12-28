@@ -2,6 +2,7 @@
 { pkgs, ... }:
 {
   environment.systemPackages = with pkgs; [
+
     # Hypr
     hyprsunset
     hyprpicker
@@ -74,10 +75,6 @@
     weechat
     vesktop
 
-    # Login
-    sddm-sugar-dark
-    kdePackages.sddm
-
     # Automation
     openrgb
     wtype
@@ -100,7 +97,11 @@
     alcom # UI for vrc-get
     xrizer # OpenVR -> OpenXR
     # xrbinder # To bind stuff
+
+    # Gaming
+    gamemode # Better performances or whatever
     proton-ge-rtsp-bin # It was in the nixpkgs-xr overlay sooo
+    protonup-qt # Just a gui for other proton installs
     umu-launcher # To use proton using non-steam games https://lvra.gitlab.io/docs/games/vr-no-steam/
 
     screen # For serial coms
@@ -111,7 +112,6 @@
     git # Versionning
     dunst # Notifications
     bluetui # bluetooth
-    protonup-qt # Gaming
     rofi # Launcher
     btop # Task manager
     qbittorrent # Torrenting
@@ -127,7 +127,5 @@
     pciutils # lspci
     usbutils # lsusb
     tree # I like it
-    gamemode
-    xwayland-satellite # XWayland support
   ];
 }
