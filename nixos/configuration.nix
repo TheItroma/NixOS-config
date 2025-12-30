@@ -18,8 +18,16 @@
   };
 
   programs.niri.enable = true;
+  programs.uwsm = {
+    enable = true;
+    waylandCompositors.niri = {
+      prettyName = "niri";
+      comment = "Niri compositor forked for blur";
+      binPath = "/run/current-system/sw/bin/niri";
+    };
+  };
+
   programs.steam.enable = true;
-    
   services.wivrn = {
     enable = true;
     openFirewall = true;

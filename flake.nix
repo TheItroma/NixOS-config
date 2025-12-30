@@ -5,6 +5,12 @@
 
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    
+    # Flake parts
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.flake-parts.follows = "nixpkgs";
+    };
 
     # Home manager
     home-manager = {
@@ -12,6 +18,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    niri.url = "github:Naxdy/niri";
     # Hyprland stuff
 	#    hyprland.url = "github:hyprvm/Hyprland";
 	#
@@ -42,34 +49,23 @@
 	#
     # Nixpkgs vr override for the devs versions
     nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
+
   };
 
   outputs = {
     self,
     nixpkgs,
-    nixpkgs-xr,
     home-manager,
-	...
-	} @ inputs:
+    flake-parts,
+    nixpkgs-xr,
+    niri,
+    ...
+  } @ inputs:
 
-  let
-    system = "x86_64-linux";
-  in
-
-  {
-    nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
-        system = system;
-        modules = [
-          ./nixos/configuration.nix
-          home-manager.nixosModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.itroma = import ./home/home.nix;
-          }
-          nixpkgs-xr.nixosModules.nixpkgs-xr
-        ];
-      };
+    flake-parts.lib.mkFlake { inherit inputs; }
+    {
+      imports = [
+        ./nixos/nixos.nix
+      ];
     };
-  };
 }

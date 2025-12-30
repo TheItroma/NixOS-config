@@ -85,8 +85,8 @@
 	# stremio # Player
     
     # CAD
+    openscad-unstable
     freecad-wayland
-    kicad-small
 
     # VR
     slimevr # Trackers

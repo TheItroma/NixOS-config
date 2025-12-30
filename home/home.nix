@@ -3,11 +3,11 @@
   imports = [
     ./niri/default.nix
     ./hyprland/default.nix
+    ./kicad.nix
   ];
 
   services.polkit-gnome.enable = true;
   programs.waybar.enable = true;
-
 
   home = {
    username = "itroma";
