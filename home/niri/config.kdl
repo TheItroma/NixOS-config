@@ -23,14 +23,8 @@ input {
 
 layout {
 
-    gaps 6
+    gaps 10
 
-    // When to center a column when changing focus, options are:
-    // - "never", default behavior, focusing an off-screen column will keep at the left
-    //   or right edge of the screen.
-    // - "always", the focused column will always be centered.
-    // - "on-overflow", focusing a column will center it if it doesn't fit
-    //   together with the previously focused column.
     center-focused-column "never"
 
     preset-column-widths {
@@ -55,22 +49,33 @@ layout {
         inactive-gradient from="#505050" to="#808080" angle=45
     }
 
-    // Struts shrink the area occupied by windows, similarly to layer-shell panels.
-    // You can think of them as a kind of outer gaps. They are set in logical pixels.
-    // Left and right struts will cause the next window to the side to always be visible.
-    // Top and bottom struts will simply add outer gaps in addition to the area occupied by
-    // layer-shell panels and regular gaps.
     struts {
-        left 64
-        right 64
-	top 10
-        bottom 10
+        left 150
+        right 150
+    }
+}
+
+overview {
+    zoom 0.85
+}
+
+layer-rule {
+    background-color "transparent"
+}
+
+layer-rule {
+    match namespace="^swww-daemon$"
+    match namespace="^waybar$"
+    place-within-backdrop true
+}
+
+gestures {
+    hot-corners {
+	off
     }
 }
 
 spawn-at-startup "waybar"
-// To run a shell command (with variables, pipes, etc.), use spawn-sh-at-startup:
-// spawn-sh-at-startup "qs -c ~/source/qs/MyAwesomeShell"
 
 hotkey-overlay {
     skip-at-startup
@@ -89,7 +94,6 @@ animations {
 binds {
 
     // To find an XKB name for a particular key, use wev.
-
     Mod+Shift+Slash { show-hotkey-overlay; }
     Mod+O repeat=false { toggle-overview; }
 
@@ -184,7 +188,7 @@ binds {
 
     Mod+W             { toggle-column-tabbed-display; }
 
-    // Idk about these{
+    // Idk about these
     Mod+Space         { switch-layout "next"; }
     Mod+Shift+Space   { switch-layout "prev"; }
 
@@ -192,8 +196,9 @@ binds {
     Ctrl+Print        { screenshot-screen; }
     Alt+Print         { screenshot-window; }
 
-    Mod+Shift+L       { quit; }
+    Mod+Ctrl+P       { quit; }
     Mod+Shift+P       { power-off-monitors; }
+
 }
 
 window-rule {
