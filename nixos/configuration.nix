@@ -56,6 +56,10 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
   };
 
+  environment.sessionVariables = {
+    __NV_DISABLE_EXPLICIT_SYNC = "1";
+  };
+
   nixpkgs.config = {
     allowUnfree = true;
     permittedInsecurePackages = [
