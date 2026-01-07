@@ -103,28 +103,13 @@
     protonup-qt # Just a gui for other proton installs
     umu-launcher # To use proton using non-steam games https://lvra.gitlab.io/docs/games/vr-no-steam/
 
-    screen # For serial coms
-    picocom # More serial coms
     cura-appimage # 3D printing slicer
-    tealdeer # Tldr command
-    bat # A cat clone with wings
-    git # Versionning
     dunst # Notifications
     bluetui # bluetooth
     rofi # Launcher
-    btop # Task manager
     qbittorrent # Torrenting
     kitty # Terminal
     cliphist # Clipboard
-    wget # File fetcher
-    clang # C/C++ compiler
-    ripgrep # recursively searches directories for a regex pattern
-    fzf # A command-line fuzzy finder
-    nmap # A utility for network discovery and security auditing
     nix-output-monitor
-    lm_sensors # for `sensors` command
-    pciutils # lspci
-    usbutils # lsusb
-    tree # I like it
   ];
 }

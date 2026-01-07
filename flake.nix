@@ -1,5 +1,7 @@
 {
-  description = "I have no idea what the fuck im doing";
+  description = "I am starting to have an idea of what im doing";
+
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 
   inputs = {
 
@@ -12,6 +14,18 @@
       inputs.flake-parts.follows = "nixpkgs";
     };
 
+    # Flake files
+    flake-file = {
+      url = "github:vic/flake-file";
+      inputs.flake-file.follows = "flake-parts";
+    };
+
+    # Import tree
+    import-tree = {
+      url = "github:vic/flake-file";
+      inputs.import-tree.follows = "flake-parts";
+    };
+
     # Home manager
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -19,53 +33,9 @@
     };
 
     niri.url = "github:Naxdy/niri";
-    # Hyprland stuff
-	#    hyprland.url = "github:hyprvm/Hyprland";
-	#
-	#    hyprfocus = {
-	#      url = "github:pyt0xic/hyprfocus";
-	#      inputs.hyprland.follows = "hyprland";
-	#    };
-	#
-	#    hyprNStack = {
-	#      url = "github:zakk4223/hyprNStack";
-	#      inputs.hyprland.follows = "hyprland";
-	#    };
-	#
-	#    hyprshade = {
-	#      url = "github:loqusion/hyprshade";
-	#      inputs.hyprland.follows = "hyprland";
-	#    };
-	#
-	#    hyprRiver = {
-	#      url = "github:zakk4223/hyprRiver";
-	#      inputs.hyprland.follows = "hyprland";
-	#    };
-	#
-	#    hypr-dynamic-cursors = {
-	#      url = "github:VirtCode/hypr-dynamic-cursors";
-	#      inputs.hyprland.follows = "hyprland";
-	#    };
-	#
+
     # Nixpkgs vr override for the devs versions
     nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
 
   };
-
-  outputs = {
-    self,
-    nixpkgs,
-    home-manager,
-    flake-parts,
-    nixpkgs-xr,
-    niri,
-    ...
-  } @ inputs:
-
-    flake-parts.lib.mkFlake { inherit inputs; }
-    {
-      imports = [
-        ./nixos/nixos.nix
-      ];
-    };
 }
