@@ -1,6 +1,5 @@
 { config, ... }: {
   nixosHosts.omegaBagel = {
-
     modules = [
       ./_nixos
     ]
