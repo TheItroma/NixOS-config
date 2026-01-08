@@ -4,24 +4,23 @@
   config,
   self,
   ...
-}: let inherit (lib) types mkOption; in {
+}@flakeArgs: let inherit (lib) types mkOption; in {
   options =
     let
-
       baseHostModule = { config, name, ... }: {
         options = {
-          system = mkOptions {
+          system = mkOption {
             type = types.str;
             default = "x86_64-linux";
           };
-          modules = mkOptions {
-            types = with types; listOf deferredModule;
+          modules = mkOption {
+            type = with types; listOf deferredModule;
             default = [ ];
           };
           nixpkgs = mkOption {
             type = types.pathInStore;
           };
-          pkgs = lib.mkOption {
+          pkgs = mkOption {
             type = types.pkgs;
           };
         };
@@ -36,22 +35,25 @@
 
       hostTypeNixos = types.submodule [
         baseHostModule
-        ({ name, ... }: {
-          modules = [
-            config.flake.modules.nixos.core
-            { networking.hostName = name; }
-            # ?
-          ];
-        };)
+        (
+	  { name, ... }: {
+            modules = [
+              config.flake.modules.nixos.core
+              { networking.hostName = name; }
+            ];
+          }
+	)
       ];
 
       hostTypeHomeManager = types.submodule [
         baseHostModule
-        ( { name, ... }: {
-          modules = [
-            config.flake.modules.homeManager.core
-          ];
-        };)
+        (
+	  { name, ... }: {
+            modules = [
+              config.flake.modules.homeManager.core
+            ];
+          }
+	)
       ];
 
     in {

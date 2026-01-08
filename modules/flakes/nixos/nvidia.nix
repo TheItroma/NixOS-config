@@ -18,6 +18,6 @@
       };
     };
     # Fixes tauri issues
-    environment.sessionVariables = { __NV_DISABLE_EXPLICIT_SYNC = "1"; };
+    # environment.sessionVariables = { __NV_DISABLE_EXPLICIT_SYNC = "1"; };
   };
 }

@@ -1,3 +1,4 @@
+{ config, inputs, ... }:
 {
   flake.modules.nixos.desktop.imports = with config.flake.modules.nixos; [
     inputs.nixpkgs-xr.nixosModules.nixpkgs-xr

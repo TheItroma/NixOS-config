@@ -1,6 +1,6 @@
 {
   flake.modules.nixos.vr =
-    { pkgs, .. }: {
+    { pkgs, ... }: {
       services.wivrn = {
         enable = true;
         openFirewall = true;

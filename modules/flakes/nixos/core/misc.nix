@@ -4,8 +4,5 @@
     time.timeZone = "Canada/Eastern";
 
     networking.networkmanager.enable = true;
-
-
-
-  }
+  };
 }

@@ -1,5 +1,4 @@
 {
-  description = "I am starting to have an idea of what im doing";
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -7,7 +6,6 @@
     # Flake parts
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
-      inputs.flake-parts.follows = "nixpkgs";
     };
 
     # Flake files
@@ -18,8 +16,7 @@
 
     # Import tree
     import-tree = {
-      url = "github:vic/flake-file";
-      inputs.import-tree.follows = "flake-parts";
+      url = "github:vic/import-tree";
     };
 
     # Home manager
@@ -34,14 +31,12 @@
     # Optimisations for real-time audio
     musnix = {
       url = "github:musnix/musnix";
-      inputs.musnix.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Nixpkgs vr override for the devs versions
     nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
 
   };
-  outputs =
-    { flake-parts, ... }@inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
+  outputs = inputs: inputs.flake-parts.lib.mkFlake { inherit inputs; } (inputs.import-tree ./modules);
 }
