@@ -4,5 +4,6 @@
     bootloader
     packages
     nix
+    misc
   ];
 }

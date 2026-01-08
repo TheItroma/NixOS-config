@@ -11,7 +11,7 @@
     # File managers
     yazi
     nemo
-    
+   
     # Text editors
     neovim
     obsidian
