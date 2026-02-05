@@ -8,10 +8,9 @@
         package = (pkgs.wivrn.override { cudaSupport = true; });
       };
       
-      environement.systemPackages = with pkgs; [
+      environment.systemPackages = with pkgs; [
         slimevr # Trackers
-        wlx-overlay-s # Vr desktop displayer
-        wayvr-dashboard # Vr application launcher (replaces steamvr)
+        wayvr # Vr application launcher (replaces steamvr)
         vrc-get # Cli tool to inject vrc packages to unity
         alcom # UI for vrc-get
         xrizer # OpenVR -> OpenXR

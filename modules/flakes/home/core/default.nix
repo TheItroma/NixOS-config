@@ -8,7 +8,7 @@
     }: {
       home = {
         username = lib.mkDefault "itroma";
-        homeDirectory = "home";
+        homeDirectory = "/home/${config.home.username}";
       };
     };
 }

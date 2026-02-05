@@ -40,6 +40,7 @@
             modules = [
               config.flake.modules.nixos.core
               { networking.hostName = name; }
+	      (config.flake.modules.nixos."host_${name}" or { })
             ];
           }
 	)
@@ -51,6 +52,11 @@
 	  { name, ... }: {
             modules = [
               config.flake.modules.homeManager.core
+	      (
+	        { pkgs, ... }: {
+		  nix.package = pkgs.nix;
+		}
+	      )
             ];
           }
 	)
@@ -83,6 +89,7 @@
       let
         mkHost =
           configName: options:
+	  #flake.homeConfigurations = {
           inputs.home-manager.lib.homeManagerConfiguration {
             extraSpecialArgs = {
               inputs = inputs;

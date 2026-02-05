@@ -9,7 +9,7 @@
         jack.enable = true;
       };
 
-      environement.systemPackages = with pkgs; [
+      environment.systemPackages = with pkgs; [
         # Audio
         alsa-utils
         pavucontrol

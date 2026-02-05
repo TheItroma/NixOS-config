@@ -1,15 +1,15 @@
 {
   flake.modules.nixos.music =
     { pkgs, ... } : {
-      musnix = {
-        enable = true;
-        rtcqs.enable = true;
-        kernel.realtime = true;
-      };
+      #musnix = {
+        #enable = true;
+        #rtcqs.enable = true;
+        #kernel.realtime = true;
+      #};
 
       environment.systemPackages = with pkgs; [
         # Music making
-        reaper
+		#reaper
         ardour
         sfizz
       ];

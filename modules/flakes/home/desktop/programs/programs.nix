@@ -3,11 +3,6 @@
     { pkgs, ... }: {
       home.packages = with pkgs; [
 	neovim
-        # Hypr
-        hyprsunset
-        hyprpicker
-        hyprshot
-
         # File managers
         yazi
         nemo
@@ -55,8 +50,7 @@
         openrgb
         wtype
 
-        # Video
-        kdePackages.kdenlive # Editor
+        # Video kdePackages.kdenlive # Editor
         obs-studio # Capture
         mpv # Player
 
@@ -69,7 +63,6 @@
         bluetui # bluetooth
         rofi # Launcher
         qbittorrent # Torrenting
-        kitty # Terminal
         cliphist # Clipboard
         nix-output-monitor
         pywal16 # Color palet generator
