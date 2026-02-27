@@ -64,6 +64,7 @@
 
     in {
       # An AttrSet of AttrSet, idk why this took so long for me to ingest
+      # It obviously allows to have multiple modules... Which is what the "Hosts" are
       nixosHosts = mkOption { type = types.attrsOf hostTypeNixos; };
       homeHosts = mkOption { type = types.attrsOf hostTypeHomeManager; };
     };

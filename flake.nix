@@ -34,6 +34,32 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Secret OPerationS
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    firefox-addons = {
+      url = "github:nix-community/nur-combined?dir=repos/rycee/pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixcord = {
+      url = "github:FlameFlag/nixcord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nvf = {
+      url = "github:NotAShelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    
     # Nixpkgs vr override for the devs versions
     nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
 

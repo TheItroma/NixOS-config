@@ -3,5 +3,7 @@
     home-manager
     nix
     nh
+    xdg
+    git
   ];
 }

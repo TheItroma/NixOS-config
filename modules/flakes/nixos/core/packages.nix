@@ -24,9 +24,9 @@
       clang # C/C++ compiler
       bat # A cat clone with wings
       tealdeer # Tldr command
+      ffmpeg # Video Stuff
       picocom # More serial coms
       screen # For serial coms
-      git # Versionning and fetcher
     ];
 
     programs.neovim = {

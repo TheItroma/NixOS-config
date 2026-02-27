@@ -9,5 +9,6 @@
     vr
     music
     bluetooth
+    mullvad
   ];
 }

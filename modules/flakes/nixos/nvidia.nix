@@ -1,5 +1,6 @@
 {
   flake.modules.nixos.nvidia = { pkgs, config, ... }: {
+    services.xserver.videoDrivers = [ "nvidia" ];
     hardware = {
       graphics = {
         enable = true;
@@ -12,9 +13,9 @@
           enable = false;
           finegrained = false;
         };
-        open = true;
+        open = false;
         nvidiaSettings = true;
-        package = config.boot.kernelPackages.nvidiaPackages.stable;
+        package = config.boot.kernelPackages.nvidiaPackages.latest;
       };
     };
     # Fixes tauri issues
