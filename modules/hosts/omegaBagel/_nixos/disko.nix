@@ -24,12 +24,10 @@
                 name = "crypted";
                 extraOpenArgs = [ ];
                 settings = {
-                  # if you want to use the key for interactive login be sure there is no trailing newline
-                  # for example use `echo -n "password" > /tmp/secret.key`
-                  keyFile = "/tmp/secret.key";
+                  keyFile = "/dev/disk/by-id/usb-SanDisk_Cruzer_Dial_4C531001460425116453-0:0";
+		  keyfileSize = 4096;
                   allowDiscards = true;
                 };
-                additionalKeyFiles = [ "/tmp/additionalSecret.key" ];
                 content = {
                   type = "lvm_pv";
                   vg = "pool";
@@ -70,26 +68,26 @@
               mountpoint = "/home";
             };
           };
-          luks = {
-            size = "20%";
-            content = {
-              type = "luks";
-              name = "crypted";
-              extraOpenArgs = [ ];
-              settings = {
-                # if you want to use the key for interactive login be sure there is no trailing newline
-                # for example use `echo -n "password" > /tmp/secret.key`
-                keyFile = "/tmp/secret.key";
-                allowDiscards = true;
-              };
-              additionalKeyFiles = [ "/tmp/additionalSecret.key" ];
-              content = {
-                type = "filesystem";
-                format = "ext4";
-		mountpoint = "/home/Secrets";
-              };
-            };
-          };
+#          luks = {
+#            size = "20%";
+#            content = {
+#              type = "luks";
+#              name = "crypted";
+#              extraOpenArgs = [ ];
+#              settings = {
+#                # if you want to use the key for interactive login be sure there is no trailing newline
+#                # for example use `echo -n "password" > /tmp/secret.key`
+#                keyFile = "/tmp/secret.key";
+#                allowDiscards = true;
+#              };
+#              additionalKeyFiles = [ "/tmp/additionalSecret.key" ];
+#              content = {
+#                type = "filesystem";
+#                format = "ext4";
+#		mountpoint = "/home/Secrets";
+#              };
+#            };
+#          };
         };
       };
     };

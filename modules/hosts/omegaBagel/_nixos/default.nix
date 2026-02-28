@@ -1,6 +1,7 @@
 {
   imports = [
     ./hardware.nix
+    ./disko.nix
   ];
 
   time.hardwareClockInLocalTime = true;
