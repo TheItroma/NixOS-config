@@ -56,7 +56,7 @@
             config.modules = [
               (
                 { primaryUser, ... }: {
-                  home-manager.users.${primaryUser}.imports =
+                  inputs.home-manager.users.${primaryUser}.imports =
                     config.homeManagerModules;
                 }
               )
