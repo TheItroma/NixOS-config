@@ -27,12 +27,20 @@
             type = types.str;
             default = "itroma";
           };
+          specialArgs = mkOption {
+            type = with types; attrsOf anything;
+            default = { };
+          };
         };
         config = {
           nixpkgs = inputs.nixpkgs;
           pkgs = import config.nixpkgs {
             inherit (config) system;
             config.allowUnfree = true;
+          };
+          specialArgs = {
+            inherit inputs;
+            inherit (config) primaryUser;
           };
         };
       };
@@ -47,8 +55,10 @@
             };
             config.modules = [
               (
-                { primaryUser, ... }:
-                home-manager.users.${primaryUser}.imports = config.homeManagerModules;
+                { primaryUser, ... }: {
+                  home-manager.users.${primaryUser}.imports =
+                    config.homeManagerModules;
+                };
               )
             ];
           };
@@ -97,8 +107,7 @@
           hostname: options:
           # Makes the evaluation pure https://nixos.wiki/wiki/Flakes
           options.nixpkgs.lib.nixosSystem {
-            specialArgs.inputs = inputs;
-            inherit (options) system modules;
+            inherit (options) system modules specialArgs;
           };
       # While also allowing the simple declaration of hosts
       in lib.mapAttrs mkHost config.nixosHosts;
