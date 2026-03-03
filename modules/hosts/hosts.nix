@@ -23,6 +23,10 @@
           pkgs = mkOption {
             type = types.pkgs;
           };
+          primaryUser = mkOption {
+            type = types.str;
+            default = "itroma";
+          };
         };
         config = {
           nixpkgs = inputs.nixpkgs;
@@ -35,6 +39,20 @@
 
       hostTypeNixos = types.submodule [
         baseHostModule
+	(
+	  {name, config, ... }: {
+            options.homeManagerModules = lib.mkOption {
+              type = with lib.types; listOf deferredModule;
+              default = [ ];
+            };
+            config.modules = [
+              (
+                { primaryUser, ... }:
+                home-manager.users.${primaryUser}.imports = config.homeManagerModules;
+              )
+            ];
+          };
+        )
         (
 	  { name, ... }: {
             modules = [
