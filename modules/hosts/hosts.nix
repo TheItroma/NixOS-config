@@ -58,7 +58,7 @@
                 { primaryUser, ... }: {
                   home-manager.users.${primaryUser}.imports =
                     config.homeManagerModules;
-                };
+                }
               )
             ];
           };
