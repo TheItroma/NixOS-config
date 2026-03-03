@@ -22,10 +22,7 @@
               content = {
                 type = "luks";
                 name = "crypted";
-                extraOpenArgs = [ ];
                 settings = {
-                  keyFile = "";
-                  keyfileSize = 4096;
                   allowDiscards = true;
                 };
                 content = {
@@ -50,7 +47,7 @@
             };
           };
           root = {
-            size = "30%";
+            size = "100%";
             content = {
               type = "filesystem";
               format = "ext4";
@@ -58,14 +55,6 @@
               mountOptions = [
                 "defaults"
               ];
-            };
-          };
-          home = {
-            size = "70%";
-            content = {
-              type = "filesystem";
-              format = "ext4";
-              mountpoint = "/home";
             };
           };
         };

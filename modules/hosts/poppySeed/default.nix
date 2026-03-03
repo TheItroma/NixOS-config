@@ -1,5 +1,5 @@
 { config, ... }: {
-  nixosHosts.omegaBagel = {
+  nixosHosts.poppySeed = {
     modules = [
       ./_nixos
     ]
