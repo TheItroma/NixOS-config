@@ -6,7 +6,7 @@
     in
     {
       imports = [
-        flakeArgs.inputs.home-manager.nixosModules.home-manager
+        inputs.home-manager.nixosModules.home-manager
       ];
   
       home-manager = {
