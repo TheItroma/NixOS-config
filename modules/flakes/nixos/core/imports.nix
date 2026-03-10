@@ -6,5 +6,6 @@
     bootloader
     users
     nix
+    home-manager
   ];
 }
