@@ -4,34 +4,32 @@
   config,
   self,
   ...
-}@flakeArgs: let inherit (lib) types mkOption; in {
+}@flakeArgs: let
+  inherit (lib) types mkOption mapAttrs elemAt optionalAttrs;
+  inherit (builtins) null;
+in {
   options =
     let
       baseHostModule = { config, name, ... }: {
-        options = {
-          system = mkOption {
-            type = types.str;
-            default = "x86_64-linux";
+        let
+          options = {
+            system = [ str "x86_64-linux" ];
+            modules = [ (listOf deferredModule) [ ] ];
+            nixpkgs = [ pathInStore, null ];
+            pkgs = [ pkgs, null ];
+            primaryUser = [ str "itroma" ];
+            specialArgs = [ (attrsOf anything) {} ];
           };
-          modules = mkOption {
-            type = with types; listOf deferredModule;
-            default = [ ];
-          };
-          nixpkgs = mkOption {
-            type = types.pathInStore;
-          };
-          pkgs = mkOption {
-            type = types.pkgs;
-          };
-          primaryUser = mkOption {
-            type = types.str;
-            default = "itroma";
-          };
-          specialArgs = mkOption {
-            type = with types; attrsOf anything;
-            default = { };
-          };
+          mkOptions =
+            name: options:
+            name = mkOption {
+              type = with types; elemAt options 0;
+              default = options;
+            };
+        in {
+          mapAttrs mkOptions options;
         };
+
         config = {
           nixpkgs = inputs.nixpkgs;
           pkgs = import config.nixpkgs {
@@ -110,14 +108,13 @@
             inherit (options) system modules specialArgs;
           };
       # While also allowing the simple declaration of hosts
-      in lib.mapAttrs mkHost config.nixosHosts;
+      in mapAttrs mkHost config.nixosHosts;
       # lib.mapAttrs [arg1 = function, arg2 = attrSet to itterate through]
 
     homeConfigurations =
       let
         mkHost =
           configName: options:
-	  #flake.homeConfigurations = {
           inputs.home-manager.lib.homeManagerConfiguration {
             extraSpecialArgs = {
               inputs = inputs;
@@ -127,6 +124,6 @@
             inherit (options) pkgs modules;
           };
       in
-      lib.mapAttrs mkHost config.homeHosts;
+      mapAttrs mkHost config.homeHosts;
   };
 }
