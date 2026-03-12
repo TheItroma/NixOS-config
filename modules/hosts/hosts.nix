@@ -47,11 +47,10 @@ in {
           };
         };
       };
-
       hostTypeNixos = types.submodule [
         baseHostModule
-	(
-	  {name, config, inputs, ... }: {
+        (
+          {name, config, inputs, ... }: {
             options.homeManagerModules = lib.mkOption {
               type = with lib.types; listOf deferredModule;
               default = [ ];
@@ -61,6 +60,29 @@ in {
                 { primaryUser, ... }: {
                   home-manager.users.${primaryUser}.imports =
                     config.homeManagerModules;
+                }
+              )
+              (
+                {config, primaryUser, inputs, ... }: {
+                  imports = [ inputs.home-manager.nixosModules.home-manager ];
+                  home-manager = {
+                    useGlobalPkgs = true;
+                    useUserPackages = true;
+
+                    users.${primaryUser}.imports = [
+                      config.flake.modules.homeManager.core
+                      {
+                        home.homeDirectory = config.users.users.${primaryUser}.home;
+                      };
+                    ];
+
+                    extraSpecialArgs = {
+                      inherit (flakeArgs) inputs;
+                      inherit primaryUser;
+                      configName = "nixos_${config.networking.hostName}";
+                      nhSwitchCommand = "nh os switch";
+                    };
+                  };
                 }
               )
             ];
