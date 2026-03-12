@@ -14,6 +14,7 @@ in {
         options = {
           system = mkOption {
             type = types.str;
+            default = "x86_64-linux";
           };
           modules = mkOption {
             type = with types; listOf deferredModule;
