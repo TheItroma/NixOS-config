@@ -11,29 +11,29 @@ in {
   options =
     let
       baseHostModule = { config, name, ... }: {
-        options =
-          let
-            inherit (types) str listOf attrsOf anything deferredModule pathInStore;
-            options = {
-              system = [ str "x86_64-linux" ];
-              modules = [ (listOf deferredModule) [ ] ];
-              nixpkgs = [ pathInStore null ];
-              pkgs = [ pkgs null ];
-              primaryUser = [ str "itroma" ];
-              specialArgs = [ (attrsOf anything) {} ];
-            };
-            
-            mkOptions =
-              name: options:
-              {
-                ${name} = mkOption {
-                  type = elemAt options 0;
-                  default = elemAt options 1;
-                };
-              };
-          in
-          mapAttrs mkOptions options;
-
+        options = {
+          system = mkOption {
+            type = types.str;
+          };
+          modules = mkOption {
+            type = with types; listOf deferredModule;
+            default = [ ];
+          };
+          primaryUser = mkOption {
+            type = types.str;
+            default = "gaetan";
+          };
+          specialArgs = mkOption {
+            type = with types; attrsOf anything;
+            default = { };
+          };
+          nixpkgs = mkOption {
+            type = types.pathInStore;
+          };
+          pkgs = mkOption {
+            type = types.pkgs;
+          };
+        };
         config = {
           nixpkgs = inputs.nixpkgs;
           pkgs = import config.nixpkgs {
