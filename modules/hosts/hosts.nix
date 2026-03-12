@@ -25,35 +25,31 @@ let
 
     baseHostModule
 
-    # Home Manager submodule
+    ({ name, config, inputs, ... }: {
+      modules = [
+        config.nixos-modules.nixos.core
+        { networking.hostName = name; }
+      ];
+    })
+
     ({ name, config, inputs, ... }: {
 
       options.homeManagerModules = mkOption {
-        type = with types; listOf lib.deferredModule;
+        type = with types; listOf deferredModule;
         default = [ ];
       };
 
       config.modules = [
-        inputs.home-manager.nixosModules.home-manager
+        config.home-manager.nixosModules.home-manager
 
         ({ config, primaryUser, inputs, ... }: {
           modules = [
-            home-manager.modules.homeManager.core
+            config.home-manager.modules.homeManager.core
           ];
         })
       ];
     })
-
-    # Host-specific NixOS modules
-    ({ name, config, inputs, ... }: {
-      modules = [
-        inputs.nixos-modules.nixos.core
-        { networking.hostName = name; }
-        (inputs.nixos-modules.nixos."host_${name}" or { })
-      ];
-    })
   ];
-
 in {
   options = {
     nixosHosts = mkOption { type = types.attrsOf hostTypeNixos; };
