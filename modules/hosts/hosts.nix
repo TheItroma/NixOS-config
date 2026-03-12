@@ -1,12 +1,9 @@
-{
-  inputs,
-  lib,
-  config,
-  self,
-  ...
-}@flakeArgs: let
+{ inputs, lib, config, self, ... }:
+
+let
   inherit (lib) types mkOption mapAttrs elemAt optionalAttrs;
   inherit (builtins) null;
+
 in {
   options =
     let
@@ -47,78 +44,68 @@ in {
           };
         };
       };
+
       hostTypeNixos = types.submodule [
         baseHostModule
-        (
-          {name, config, inputs, ... }: {
-            options.homeManagerModules = lib.mkOption {
-              type = with lib.types; listOf deferredModule;
-              default = [ ];
-            };
-            config.modules = [
-              (
-                { primaryUser, ... }: {
-                  home-manager.users.${primaryUser}.imports =
-                    config.homeManagerModules;
-                }
-              )
-              (
-                {config, primaryUser, inputs, ... }: {
-                  imports = [ inputs.home-manager.nixosModules.home-manager ];
-                  home-manager = {
-                    useGlobalPkgs = true;
-                    useUserPackages = true;
+        ({ name, config, inputs, ... }: {
+          options.homeManagerModules = lib.mkOption {
+            type = with lib.types; listOf deferredModule;
+            default = [ ];
+          };
+          config.modules = [
+            ({ primaryUser, ... }: {
+              home-manager.users.${primaryUser}.imports =
+                config.homeManagerModules;
+            })
+            ({ config, primaryUser, inputs, self, ... }: 
+              let
+                # Use self instead of config.flake
+                homeManagerCore = self.modules.homeManager.core;
+              in {
+                imports = [ inputs.home-manager.nixosModules.home-manager ];
+                home-manager = {
+                  useGlobalPkgs = true;
+                  useUserPackages = true;
 
-                    users.${primaryUser}.imports = [
-                      self.flake.modules.homeManager.core
-                      {
-                        home.homeDirectory = config.users.users.${primaryUser}.home;
-                      }
-                    ];
+                  users.${primaryUser}.imports = [
+                    homeManagerCore
+                    {
+                      home.homeDirectory = config.users.users.${primaryUser}.home;
+                    }
+                  ];
 
-                    extraSpecialArgs = {
-                      inherit (flakeArgs) inputs;
-                      inherit primaryUser;
-                      configName = "nixos_${config.networking.hostName}";
-                      nhSwitchCommand = "nh os switch";
-                    };
+                  extraSpecialArgs = {
+                    inherit (self) inputs;
+                    inherit primaryUser;
+                    configName = "nixos_${config.networking.hostName}";
+                    nhSwitchCommand = "nh os switch";
                   };
-                }
-              )
-            ];
-          }
-        )
-        (
-	  { name, ... }: {
-            modules = [
-              config.flake.modules.nixos.core
-              { networking.hostName = name; }
-	      (config.flake.modules.nixos."host_${name}" or { })
-            ];
-          }
-	)
+                };
+              }
+            )
+          ];
+        })
+        ({ name, ... }: {
+          modules = [
+            config.flake.modules.nixos.core
+            { networking.hostName = name; }
+            (config.flake.modules.nixos."host_${name}" or { })
+          ];
+        })
       ];
 
     in {
-      # An AttrSet of AttrSet, idk why this took so long for me to ingest
-      # It obviously allows to have multiple modules... Which is what the "Hosts" are
       nixosHosts = mkOption { type = types.attrsOf hostTypeNixos; };
     };
 
   config.flake = {
 
-    nixosConfigurations = 
+    nixosConfigurations =
       let
-        # This took a bit for me to get it. Bassically, it defines a function under here
-        mkHost = 
-          # This functions simply makes the basic options available to the whole config
-          hostname: options:
-          # Makes the evaluation pure https://nixos.wiki/wiki/Flakes
+        mkHost = hostname: options:
           options.nixpkgs.lib.nixosSystem {
             inherit (options) system modules specialArgs;
           };
-      # While also allowing the simple declaration of hosts
       in mapAttrs mkHost config.nixosHosts;
-      # lib.mapAttrs [arg1 = function, arg2 = attrSet to itterate through]
   };
 }
