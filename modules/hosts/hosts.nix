@@ -3,13 +3,12 @@
 let
   inherit (lib) types mkOption mapAttrs;
 
-  # Base host module template
   baseHostModule = { config, name, ... }: {
     options = {
       system = mkOption { type = types.str; default = "x86_64-linux"; };
       modules = mkOption { type = with types; listOf deferredModule; default = [ ]; };
       primaryUser = mkOption { type = types.str; default = "itroma"; };
-      specialArgs = mkOption { type = with types; attrsOf anything; default = { }; };
+      specialArgs = mkOption { type = types.attrsOf types.anything; default = { }; };
       nixpkgs = mkOption { type = types.pathInStore; };
       pkgs = mkOption { type = types.pkgs; };
     };
@@ -20,19 +19,17 @@ let
         inherit (config) system;
         config.allowUnfree = true;
       };
-      specialArgs = {
-        inherit inputs;
-        inherit (config) primaryUser;
-      };
+      specialArgs = { inherit inputs; inherit (config) primaryUser; };
     };
   };
 
-  # Host type for NixOS submodules
   hostTypeNixos = types.submodule [
+
     baseHostModule
 
     # Home Manager + host-specific configuration
     ({ name, config, inputs, self, ... }: {
+
       options.homeManagerModules = mkOption {
         type = with types; listOf lib.deferredModule;
         default = [ ];
