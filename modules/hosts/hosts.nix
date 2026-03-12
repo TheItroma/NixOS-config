@@ -1,4 +1,4 @@
-{ inputs, lib, config, self, ... }@flakeArgs:
+{ inputs, lib, config, ... }:
 
 let
   inherit (lib) types mkOption mapAttrs;
@@ -27,8 +27,8 @@ let
 
     baseHostModule
 
-    # Home Manager + host-specific configuration
-    ({ name, config, inputs, self, ... }: {
+    # Home Manager modules
+    ({ name, config, inputs, ... }: {
 
       options.homeManagerModules = mkOption {
         type = with types; listOf lib.deferredModule;
@@ -37,25 +37,24 @@ let
 
       config.modules = [
 
-        # Apply host-specific Home Manager modules
         ({ primaryUser, ... }: {
           home-manager.users.${primaryUser}.imports = config.homeManagerModules;
         })
 
-        # Home Manager core + extra special args
-        ({ config, primaryUser, inputs, self, ... }: {
+        ({ config, primaryUser, inputs, ... }: {
           imports = [ inputs.home-manager.nixosModules.home-manager ];
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
 
+            # Reference Home Manager core via inputs instead of self
             users.${primaryUser}.imports = [
-              self.modules.homeManager.core
+              inputs.flake-modules.homeManager.core
               { home.homeDirectory = config.users.users.${primaryUser}.home; }
             ];
 
             extraSpecialArgs = {
-              inherit (self) inputs;
+              inherit inputs;
               inherit primaryUser;
               configName = "nixos_${config.networking.hostName}";
               nhSwitchCommand = "nh os switch";
@@ -66,11 +65,11 @@ let
     })
 
     # Host-specific NixOS modules
-    ({ name, self, ... }: {
+    ({ name, ... }: {
       modules = [
-        self.modules.nixos.core
+        inputs.flake-modules.nixos.core
         { networking.hostName = name; }
-        (self.modules.nixos."host_${name}" or { })
+        (inputs.flake-modules.nixos."host_${name}" or { })
       ];
     })
   ];
