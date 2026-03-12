@@ -1,6 +1,5 @@
-{
+{ config, primaryUser, inputs, ... }: {
   flake.modules.nixos.home-manager =
-    { config, primaryUser, inputs, ... }:
     let
       inherit (config.networking) hostName;
     in
@@ -18,7 +17,6 @@
           {
             # Ensure that the NixOS's HOMEDIR for this user is the same as home-manager's
             home.homeDirectory = config.users.users.${primaryUser}.home;
-  
           }
         ];
   
@@ -30,4 +28,5 @@
         };
       };
     };
+  };
 }
