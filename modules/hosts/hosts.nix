@@ -6,7 +6,7 @@ let
   # Base host template
   baseHostModule = { config, name, ... }: {
     options = {
-      system = mkOption { type = types.str; default = "x86_64-linux"; };
+      system = mkOption {type = types.str; default = "x86_64-linux"; };
       modules = mkOption { type = with types; listOf deferredModule; default = [ ]; };
       primaryUser = mkOption { type = types.str; default = "itroma"; };
       specialArgs = mkOption { type = types.attrsOf types.anything; default = { }; };
@@ -35,12 +35,7 @@ let
 
       config.modules = [
 
-        # Apply user-specific home manager modules
-        ({ primaryUser, ... }: {
-          home-manager.users.${primaryUser}.imports = config.homeManagerModules;
-        })
-
-        # Home Manager core + extra args
+        # Home Manager
         ({ config, primaryUser, inputs, ... }: {
           imports = [ inputs.home-manager.nixosModules.home-manager ];
           home-manager = {
@@ -49,6 +44,7 @@ let
 
             # Reference Home Manager core via inputs
             users.${primaryUser}.imports = [
+              config.homeManagerModules
               inputs.home-manager.modules.homeManager.core
               { home.homeDirectory = config.users.users.${primaryUser}.home; }
             ];
