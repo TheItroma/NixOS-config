@@ -3,6 +3,7 @@
 let
   inherit (lib) types mkOption mapAttrs;
 
+  # Base host template
   baseHostModule = { config, name, ... }: {
     options = {
       system = mkOption { type = types.str; default = "x86_64-linux"; };
@@ -15,10 +16,7 @@ let
 
     config = {
       nixpkgs = inputs.nixpkgs;
-      pkgs = import config.nixpkgs {
-        inherit (config) system;
-        config.allowUnfree = true;
-      };
+      pkgs = import config.nixpkgs { inherit (config) system; config.allowUnfree = true; };
       specialArgs = { inherit inputs; inherit (config) primaryUser; };
     };
   };
@@ -27,7 +25,7 @@ let
 
     baseHostModule
 
-    # Home Manager modules
+    # Home Manager submodule
     ({ name, config, inputs, ... }: {
 
       options.homeManagerModules = mkOption {
@@ -37,19 +35,21 @@ let
 
       config.modules = [
 
+        # Apply user-specific home manager modules
         ({ primaryUser, ... }: {
           home-manager.users.${primaryUser}.imports = config.homeManagerModules;
         })
 
+        # Home Manager core + extra args
         ({ config, primaryUser, inputs, ... }: {
           imports = [ inputs.home-manager.nixosModules.home-manager ];
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
 
-            # Reference Home Manager core via inputs instead of self
+            # Reference Home Manager core via inputs
             users.${primaryUser}.imports = [
-              inputs.flake-modules.homeManager.core
+              inputs.home-manager.modules.homeManager.core
               { home.homeDirectory = config.users.users.${primaryUser}.home; }
             ];
 
@@ -65,11 +65,11 @@ let
     })
 
     # Host-specific NixOS modules
-    ({ name, ... }: {
+    ({ name, config, inputs, ... }: {
       modules = [
-        inputs.flake-modules.nixos.core
+        inputs.nixos-modules.nixos.core
         { networking.hostName = name; }
-        (inputs.flake-modules.nixos."host_${name}" or { })
+        (inputs.nixos-modules.nixos."host_${name}" or { })
       ];
     })
   ];
