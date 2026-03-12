@@ -15,8 +15,8 @@ in {
           options = {
             system = [ str "x86_64-linux" ];
             modules = [ (listOf deferredModule) [ ] ];
-            nixpkgs = [ pathInStore, null ];
-            pkgs = [ pkgs, null ];
+            nixpkgs = [ pathInStore null ];
+            pkgs = [ pkgs null ];
             primaryUser = [ str "itroma" ];
             specialArgs = [ (attrsOf anything) {} ];
           };
