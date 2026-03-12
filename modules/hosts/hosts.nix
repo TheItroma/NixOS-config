@@ -13,6 +13,7 @@ in {
       baseHostModule = { config, name, ... }: {
         options =
           let
+            inherit (types) str listOf attrsOf anything deferredModule pathInStore;
             options = {
               system = [ str "x86_64-linux" ];
               modules = [ (listOf deferredModule) [ ] ];
@@ -26,7 +27,7 @@ in {
               name: options:
               {
                 ${name} = mkOption {
-                  type = with types; elemAt options 0;
+                  type = elemAt options 0;
                   default = elemAt options 1;
                 };
               };
