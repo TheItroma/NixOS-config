@@ -10,8 +10,9 @@
 in {
   options =
     let
-      baseHostModule =
+      baseHostModule =  { config, name, ... }: {
         let
+
           options = {
             system = [ str "x86_64-linux" ];
             modules = [ (listOf deferredModule) [ ] ];
@@ -20,25 +21,28 @@ in {
             primaryUser = [ str "itroma" ];
             specialArgs = [ (attrsOf anything) {} ];
           };
+
           mkOptions =
             name: options:
-            name = mkOption {
-              type = with types; elemAt options 0;
-              default = options;
-            };
-        in { config, name, ... }: {
-          mapAttrs mkOptions options;
-          config = {
-            nixpkgs = inputs.nixpkgs;
-            pkgs = import config.nixpkgs {
-              inherit (config) system;
-              config.allowUnfree = true;
-            };
-            specialArgs = {
-              inherit inputs;
-              inherit (config) primaryUser;
-            };
+            {
+              ${name} = mkOption {
+                type = with types; elemAt options 0;
+                default = elemAt options 1;
+              };
+            }
+        in
+        mapAttrs mkOptions options;
+        config = {
+          nixpkgs = inputs.nixpkgs;
+          pkgs = import config.nixpkgs {
+            inherit (config) system;
+            config.allowUnfree = true;
           };
+          specialArgs = {
+            inherit inputs;
+            inherit (config) primaryUser;
+          };
+        };
       };
 
       hostTypeNixos = types.submodule [
@@ -70,27 +74,10 @@ in {
 	)
       ];
 
-      hostTypeHomeManager = types.submodule [
-        baseHostModule
-        (
-	  { name, ... }: {
-            modules = [
-              config.flake.modules.homeManager.core
-	      (
-	        { pkgs, ... }: {
-		  nix.package = pkgs.nix;
-		}
-	      )
-            ];
-          }
-	)
-      ];
-
     in {
       # An AttrSet of AttrSet, idk why this took so long for me to ingest
       # It obviously allows to have multiple modules... Which is what the "Hosts" are
       nixosHosts = mkOption { type = types.attrsOf hostTypeNixos; };
-      homeHosts = mkOption { type = types.attrsOf hostTypeHomeManager; };
     };
 
   config.flake = {
@@ -108,20 +95,5 @@ in {
       # While also allowing the simple declaration of hosts
       in mapAttrs mkHost config.nixosHosts;
       # lib.mapAttrs [arg1 = function, arg2 = attrSet to itterate through]
-
-    homeConfigurations =
-      let
-        mkHost =
-          configName: options:
-          inputs.home-manager.lib.homeManagerConfiguration {
-            extraSpecialArgs = {
-              inputs = inputs;
-              inherit configName;
-              nhSwitchCommand = "nh home switch --configuration ${configName}";
-            };
-            inherit (options) pkgs modules;
-          };
-      in
-      mapAttrs mkHost config.homeHosts;
   };
 }
