@@ -1,8 +1,8 @@
 { config, inputs, ... }: {
-  flake.modules.nixos.home-manager =
+  flake.modules.nixos.home-manager = { config, primaryUser, ... }:
     let
-      inherit (config.networking) hostName;
-      primaryUser = config.primaryUser;
+      hostName = config.networking.hostName;
+	    #inherit (config.networking) hostName;
     in
     {
       imports = [
