@@ -29,7 +29,7 @@ in {
                   type = with types; elemAt options 0;
                   default = elemAt options 1;
                 };
-              }
+              };
           in
           mapAttrs mkOptions options;
 
