@@ -2,6 +2,7 @@
   flake.modules.nixos.home-manager =
     let
       inherit (config.networking) hostName;
+      inherit (config) primaryUser;
     in
     {
       imports = [
