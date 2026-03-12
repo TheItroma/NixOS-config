@@ -7,7 +7,7 @@ let
   baseHostModule = { config, name, ... }: {
     options = {
       system = mkOption { type = types.str; default = "x86_64-linux"; };
-      modules = mkOption { type = with types; listOf lib.deferredModule; default = [ ]; };
+      modules = mkOption { type = with types; listOf deferredModule; default = [ ]; };
       primaryUser = mkOption { type = types.str; default = "itroma"; };
       specialArgs = mkOption { type = with types; attrsOf anything; default = { }; };
       nixpkgs = mkOption { type = types.pathInStore; };
