@@ -73,7 +73,7 @@ in {
                       config.flake.modules.homeManager.core
                       {
                         home.homeDirectory = config.users.users.${primaryUser}.home;
-                      };
+                      }
                     ];
 
                     extraSpecialArgs = {
