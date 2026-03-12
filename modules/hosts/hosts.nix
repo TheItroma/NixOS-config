@@ -47,6 +47,7 @@ in {
 
       hostTypeNixos = types.submodule [
         baseHostModule
+<<<<<<< HEAD
         ({ name, config, inputs, ... }: {
           options.homeManagerModules = lib.mkOption {
             type = with lib.types; listOf deferredModule;
@@ -73,6 +74,34 @@ in {
                       home.homeDirectory = config.users.users.${primaryUser}.home;
                     }
                   ];
+=======
+        (
+          {name, config, inputs, ... }: {
+            options.homeManagerModules = lib.mkOption {
+              type = with lib.types; listOf deferredModule;
+              default = [ ];
+            };
+            config.modules = [
+              (
+                { primaryUser, ... }: {
+                  home-manager.users.${primaryUser}.imports =
+                    config.homeManagerModules;
+                }
+              )
+              (
+                { self, config, primaryUser, inputs, ... }: {
+                  imports = [ inputs.home-manager.nixosModules.home-manager ];
+                  home-manager = {
+                    useGlobalPkgs = true;
+                    useUserPackages = true;
+
+                    users.${primaryUser}.imports = [
+                      self.modules.homeManager.core
+                      {
+                        home.homeDirectory = config.users.users.${primaryUser}.home;
+                      }
+                    ];
+>>>>>>> 8d488be (ah)
 
                   extraSpecialArgs = {
                     inherit (self) inputs;
