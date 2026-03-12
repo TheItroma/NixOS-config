@@ -43,7 +43,7 @@ let
 
             users.${primaryUser}.imports = [
               config.homeManagerModules
-              inputs.home-manager.modules.homeManager.core
+              home-manager.modules.homeManager.core
             ];
 
             extraSpecialArgs = {
