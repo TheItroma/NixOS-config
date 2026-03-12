@@ -59,7 +59,7 @@ in {
             config.modules = [
               (
                 { primaryUser, ... }: {
-                  inputs.home-manager.users.${primaryUser}.imports =
+                  home-manager.users.${primaryUser}.imports =
                     config.homeManagerModules;
                 }
               )
