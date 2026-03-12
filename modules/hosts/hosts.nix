@@ -37,22 +37,9 @@ let
         inputs.home-manager.nixosModules.home-manager
 
         ({ config, primaryUser, inputs, ... }: {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-
-            users.${primaryUser}.imports = [
-              config.homeManagerModules
-              home-manager.modules.homeManager.core
-            ];
-
-            extraSpecialArgs = {
-              inherit inputs;
-              inherit primaryUser;
-              configName = "nixos_${config.networking.hostName}";
-              nhSwitchCommand = "nh os switch";
-            };
-          };
+          modules = [
+            inputs.home-manager.modules.homeManager.core
+          ];
         })
       ];
     })
