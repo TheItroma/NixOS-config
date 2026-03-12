@@ -22,7 +22,7 @@ in {
           };
           primaryUser = mkOption {
             type = types.str;
-            default = "gaetan";
+            default = "itroma";
           };
           specialArgs = mkOption {
             type = with types; attrsOf anything;
@@ -51,7 +51,7 @@ in {
       hostTypeNixos = types.submodule [
         baseHostModule
 	(
-	  {name, config, ... }: {
+	  {name, config, inputs, ... }: {
             options.homeManagerModules = lib.mkOption {
               type = with lib.types; listOf deferredModule;
               default = [ ];
