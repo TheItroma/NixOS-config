@@ -10,9 +10,8 @@
 in {
   options =
     let
-      baseHostModule = { config, name, ... }: {
+      baseHostModule =
         let
-
           options = {
             system = [ str "x86_64-linux" ];
             modules = [ (listOf deferredModule) [ ] ];
@@ -21,27 +20,25 @@ in {
             primaryUser = [ str "itroma" ];
             specialArgs = [ (attrsOf anything) {} ];
           };
-
           mkOptions =
             name: options:
             name = mkOption {
               type = with types; elemAt options 0;
               default = options;
             };
-        in
-        mapAttrs mkOptions options;
-
-        config = {
-          nixpkgs = inputs.nixpkgs;
-          pkgs = import config.nixpkgs {
-            inherit (config) system;
-            config.allowUnfree = true;
+        in { config, name, ... }: {
+          mapAttrs mkOptions options;
+          config = {
+            nixpkgs = inputs.nixpkgs;
+            pkgs = import config.nixpkgs {
+              inherit (config) system;
+              config.allowUnfree = true;
+            };
+            specialArgs = {
+              inherit inputs;
+              inherit (config) primaryUser;
+            };
           };
-          specialArgs = {
-            inherit inputs;
-            inherit (config) primaryUser;
-          };
-        };
       };
 
       hostTypeNixos = types.submodule [
