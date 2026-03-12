@@ -38,7 +38,7 @@ let
 
         ({ config, primaryUser, inputs, ... }: {
           modules = [
-            inputs.home-manager.modules.homeManager.core
+            home-manager.modules.homeManager.core
           ];
         })
       ];
