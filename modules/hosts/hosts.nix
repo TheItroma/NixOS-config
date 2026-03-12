@@ -34,19 +34,16 @@ let
       };
 
       config.modules = [
+        inputs.home-manager.nixosModules.home-manager
 
-        # Home Manager
         ({ config, primaryUser, inputs, ... }: {
-          imports = [ inputs.home-manager.nixosModules.home-manager ];
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
 
-            # Reference Home Manager core via inputs
             users.${primaryUser}.imports = [
               config.homeManagerModules
               inputs.home-manager.modules.homeManager.core
-              { home.homeDirectory = config.users.users.${primaryUser}.home; }
             ];
 
             extraSpecialArgs = {
