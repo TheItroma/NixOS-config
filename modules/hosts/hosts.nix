@@ -12,6 +12,7 @@ in {
     let
       baseHostModule = { config, name, ... }: {
         let
+
           options = {
             system = [ str "x86_64-linux" ];
             modules = [ (listOf deferredModule) [ ] ];
@@ -20,15 +21,15 @@ in {
             primaryUser = [ str "itroma" ];
             specialArgs = [ (attrsOf anything) {} ];
           };
+
           mkOptions =
             name: options:
             name = mkOption {
               type = with types; elemAt options 0;
               default = options;
             };
-        in {
-          mapAttrs mkOptions options;
-        };
+        in
+        mapAttrs mkOptions options;
 
         config = {
           nixpkgs = inputs.nixpkgs;
