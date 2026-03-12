@@ -6,5 +6,9 @@
     ++ (with config.flake.modules.nixos; [
       desktop
     ]);
+
+    homeManagerModules = with config.flake.modules.homeManager; [
+      desktop
+    ];
   };
 }

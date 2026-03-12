@@ -7,5 +7,10 @@
       desktop
       nvidia
     ]);
+
+    homeManagerModules = with config.flake.modules.homeManager; [
+      desktop
+    ];
+
   };
 }
