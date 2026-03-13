@@ -34,7 +34,6 @@ let
           { primaryUser, ... }:
           lib.optionalAttrs (config.homeManagerModules != [ ]) {
             home-manager.users.${primaryUser}.imports = [
-              config.flake.modules.homeManager.core
               config.homeManagerModules
             ];
           }
@@ -44,16 +43,19 @@ let
   };
 
   hostTypeNixos = types.submodule [
-
     baseHostModule
     homeManagerModule
     # The line above is simply allowing the top level host configuration to import modules.
     # Since we are using the NixOS home-manager module, the actual definition is in nixos/core.
-
     ({ name, ... }: {
+
       modules = [
         config.flake.modules.nixos.core
         { networking.hostName = name; }
+      ];
+
+      homeManagerModules = [
+        config.flake.modules.nixos.home-manager
       ];
     })
   ];
