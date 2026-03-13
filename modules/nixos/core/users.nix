@@ -1,6 +1,6 @@
 {
   flake.modules.nixos.users = { primaryUser, ... }: {
-    users = {
+    users.users = {
 	    #      root = {
 	    #        isSystemUser = true;
 	    #      };
