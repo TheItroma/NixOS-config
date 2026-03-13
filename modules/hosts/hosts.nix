@@ -33,9 +33,7 @@ let
         (
           { primaryUser, ... }:
           lib.optionalAttrs (config.homeManagerModules != [ ]) {
-            home-manager.users.${primaryUser}.imports = [
-              config.homeManagerModules
-            ];
+            home-manager.users.${primaryUser}.imports = config.homeManagerModules;
           }
         )
       ];
