@@ -22,11 +22,6 @@ let
 
   homeManagerModule = { config, name, ... }: {
     options = {
-      specialArgs = mkOption {
-        type = with types; attrsOf anything;
-        default = { };
-      };
-
       homeManagerModules = mkOption {
         type = with types; listOf deferredModule;
         default = [ ];
@@ -42,8 +37,6 @@ let
           }
         )
       ];
-
-
     };
   };
 
