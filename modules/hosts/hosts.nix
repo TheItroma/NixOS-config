@@ -51,10 +51,6 @@ let
         config.flake.modules.nixos.core
         { networking.hostName = name; }
       ];
-
-      homeManagerModules = [
-        config.flake.modules.nixos.home-manager
-      ];
     })
   ];
 in {
