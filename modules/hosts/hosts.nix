@@ -3,7 +3,6 @@
 let
   inherit (lib) types mkOption mapAttrs;
 
-  # Base host template
   baseHostModule = { config, name, ... }: {
     options = {
       system = mkOption {type = types.str; default = "x86_64-linux"; };
@@ -21,32 +20,36 @@ let
     };
   };
 
+  homeManagerModule = { config, name, ... }: {
+
+    options.homeManagerModules = mkOption {
+      type = with types; listOf deferredModules;
+      default = [ ];
+    };
+
+    config = {
+      modules = [
+        (
+          { primaryUser, ... }:
+          lib.optionalAttrs (config.homeManagerModules != [ ]) {
+            home-manager.users.${primaryUser}.imports = config.homeManagerModules;
+          }
+        )
+      ];
+    };
+  };
+
   hostTypeNixos = types.submodule [
 
     baseHostModule
+    homeManagerModule
+    # The line above is simply allowing the top level host configuration to import modules.
+    # Since we are using the NixOS home-manager module, the actual definition is in nixos/core.
 
-    ({ name, config, inputs, ... }: {
+    ({ name, ... }: {
       modules = [
-        config.nixos-modules.nixos.core
+        config.flake.modules.nixos.core
         { networking.hostName = name; }
-      ];
-    })
-
-    ({ name, config, inputs, ... }: {
-
-      options.homeManagerModules = mkOption {
-        type = with types; listOf deferredModule;
-        default = [ ];
-      };
-
-      config.modules = [
-        config.home-manager.nixosModules.home-manager
-
-        ({ config, primaryUser, inputs, ... }: {
-          modules = [
-            config.home-manager.modules.homeManager.core
-          ];
-        })
       ];
     })
   ];

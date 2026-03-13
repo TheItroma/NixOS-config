@@ -4,11 +4,12 @@
       lib,
       pkgs,
       config,
+      primaryUser,
       ...
     }: {
       home = {
-        username = lib.mkDefault "itroma";
-        homeDirectory = "/home/${config.home.username}";
+        username = primaryUser;
+		#homeDirectory = "/home/${config.home.username}";
       };
     };
 }
