@@ -1,5 +1,5 @@
-{ config, primaryUser, inputs, ... }: {
-  flake.modules.nixos.home-manager = {
+{
+  flake.modules.nixos.home-manager = { config, primaryUser, inputs, ... }: {
     home-manager = {
       userGlobalPkgs = true;
       useUserPackages = true;
