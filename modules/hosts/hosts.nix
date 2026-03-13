@@ -23,7 +23,7 @@ let
   homeManagerModule = { config, name, ... }: {
 
     options.homeManagerModules = mkOption {
-      type = with types; listOf deferredModules;
+      type = with types; listOf deferredModule;
       default = [ ];
     };
 
