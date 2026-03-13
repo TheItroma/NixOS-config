@@ -12,10 +12,10 @@
       ];
     };
 
-    specialArgs = {
-      inherit primaryUser inputs;
-      configName = "${primaryUser}";
-      nhSwitchCommand = "nh os switch";
-    };
+	#    specialArgs = {
+	#      inherit primaryUser inputs;
+	#      configName = "${primaryUser}";
+	#      nhSwitchCommand = "nh os switch";
+	#    };
   };
 }
