@@ -20,7 +20,7 @@ let
     };
   };
 
-  homeManagerModule = { config, name, ... }: {
+  homeManagerModule = { config, primaryUser, name, ... }: {
     options = {
       specialArgs = mkOption {
         type = with types; attrsOf anything;
