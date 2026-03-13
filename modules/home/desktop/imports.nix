@@ -6,7 +6,6 @@
     niri
     desktop-programs
     wallpaper
-    nixcord
     dwl
   ];
 }

@@ -5,7 +5,7 @@
       enable = true;
       equibop = {
         enable = true;
-	autoscroll.enable = true;
+        autoscroll.enable = true;
       };
       config = {
         plugins = {
