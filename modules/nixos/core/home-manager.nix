@@ -5,7 +5,7 @@
       useUserPackages = true;
 
       users.${primaryUser} = {
-        home.stateVersion = "25.05";
+        home.stateVersion = "26.05";
         imports = [
           {
             home.homeDirectory = config.users.users.${primaryUser}.home;
