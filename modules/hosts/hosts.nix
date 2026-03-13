@@ -20,7 +20,7 @@ let
     };
   };
 
-  homeManagerModule = { config, primaryUser, name, ... }: {
+  homeManagerModule = { config, name, ... }: {
     options = {
       specialArgs = mkOption {
         type = with types; attrsOf anything;
@@ -43,11 +43,7 @@ let
         )
       ];
 
-      specialArgs = {
-        inherit primaryUser inputs;
-        configName = "${primaryUser}";
-        nhSwitchCommand = "nh os switch";
-      };
+
     };
   };
 

@@ -11,5 +11,11 @@
         }
       ];
     };
+
+    specialArgs = {
+      inherit primaryUser inputs;
+      configName = "${primaryUser}";
+      nhSwitchCommand = "nh os switch";
+    };
   };
 }
