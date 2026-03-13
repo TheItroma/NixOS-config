@@ -4,11 +4,14 @@
       useGlobalPkgs = true;
       useUserPackages = true;
 
-      users.${primaryUser}.imports = [
-        {
-          home.homeDirectory = config.users.users.${primaryUser}.home;
-        }
-      ];
+      users.${primaryUser} = {
+        home.stateVersion = "25.05";
+        imports = [
+          {
+            home.homeDirectory = config.users.users.${primaryUser}.home;
+          }
+        ];
+      };
     };
 
 	#    specialArgs = {
