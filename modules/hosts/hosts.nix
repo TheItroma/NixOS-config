@@ -33,7 +33,10 @@ let
         (
           { primaryUser, ... }:
           lib.optionalAttrs (config.homeManagerModules != [ ]) {
-            home-manager.users.${primaryUser}.imports = config.homeManagerModules;
+            home-manager.users.${primaryUser}.imports = [
+              config.flake.modules.homeManager.core
+              config.homeManagerModules
+            ];
           }
         )
       ];
