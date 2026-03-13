@@ -1,4 +1,4 @@
-{ inputs, pkgs, ... }; {
+{ inputs, pkgs, ... }: {
   flake.modules.nixos.vr = {
 
     imports = [ inputs.nixpkgs-xr.nixosModules.nixpkgs-xr ];
