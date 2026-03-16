@@ -65,9 +65,10 @@
         qbittorrent # Torrenting
         cliphist # Clipboard
         nix-output-monitor
-        pywal16 # Color palet generator
         weechat # Irc and Matrix tui
         obsidian # Text editors
+        mumble # Voice chat client
+        wiremix # Simple TUI mixer for PipeWire
         pass # Password manager
         calligraphy # Does cool ASCII banners
       ];

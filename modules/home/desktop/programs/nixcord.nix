@@ -18,7 +18,6 @@
           readAllNotificationsButton.enable = true;
           fakeNitro.enable = true;
           alwaysAnimate.enable = true;
-          betterFolders.enable = true;
           musicControls.enable = true;
           messageClickActions.enable = true;
           silentMessageToggle.enable = true;
@@ -28,7 +27,10 @@
           relationshipNotifier.enable = true;
           fixSpotifyEmbeds.enable = true;
           youtubeAdblock.enable = true;
-          anammox.enable = true;
+	  clientTheme = {
+	    enable = true;
+	    color = "000000";
+	  };
         };
       };
     };

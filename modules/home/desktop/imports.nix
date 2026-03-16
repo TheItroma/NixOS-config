@@ -1,5 +1,9 @@
-{ config, pkgs, ... }: {
+{ config, inputs, pkgs, ... }: {
   flake.modules.homeManager.desktop.imports = with config.flake.modules.homeManager; [
+
+    inputs.nvf.homeManagerModules.nvf
+    inputs.stylix.homeModules.stylix
+
     librewolf
     hyprland
     kitty
@@ -7,5 +11,8 @@
     desktop-programs
     wallpaper
     dwl
+    nixcord
+    neovim
+    theming
   ];
 }

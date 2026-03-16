@@ -1,8 +1,8 @@
 {
   flake.modules.nixos.home-manager = { config, primaryUser, inputs, ... }: {
     home-manager = {
-      useGlobalPkgs = true;
-      useUserPackages = true;
+#useGlobalPkgs = true;
+#useUserPackages = true;
 
       users.${primaryUser} = {
         home.stateVersion = "26.05";

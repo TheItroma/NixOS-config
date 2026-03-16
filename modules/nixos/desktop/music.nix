@@ -1,16 +1,31 @@
-{ inputs, pkgs, ... }: {
-  flake.modules.nixos.music = {
+{
+  flake.modules.nixos.music = { inputs, pkgs, ... }: {
+
     imports = [ inputs.musnix.nixosModules.musnix ];
-    #musnix = {
-      #enable = true;
-      #rtcqs.enable = true;
-      #kernel.realtime = true;
-    #};
+
+    musnix = {
+      enable = false;
+      rtcqs.enable = true;
+    };
 
     environment.systemPackages = with pkgs; [
-      # Music making
-      	#reaper
+      # Daw
+      reaper
       ardour
+
+      # Synth
+      surge-xt
+      zynaddsubfx
+      yoshimi
+
+      # FX
+      calf
+      eq10q
+      infamousPlugins
+      wolf-shaper
+      lsp-plugins
+
+      # Samplers
       sfizz
     ];
   };

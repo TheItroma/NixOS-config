@@ -8,8 +8,7 @@
       ...
     }: {
       home = {
-        username = primaryUser;
-		#homeDirectory = "/home/${config.home.username}";
+        #username = "itroma"; # change back to primaryUser
       };
     };
 }

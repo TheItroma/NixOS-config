@@ -11,6 +11,8 @@
       userDirs = {
         enable = true;
 
+        createDirectories = true;
+
         publicShare = builtins.null;
         templates = builtins.null;
       };

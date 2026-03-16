@@ -19,8 +19,11 @@
   ];
 
   boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
+  boot.kernelModules = [ "kvm-intel" ];
+
+
+
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
   # (the default) this is the recommended approach. When using systemd-networkd it's
@@ -32,4 +35,6 @@
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+
+  musnix.soundcardPciId = "00:1f.3";
 }

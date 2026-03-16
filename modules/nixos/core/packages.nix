@@ -22,18 +22,12 @@
       # Misc
       nmap # A utility for network discovery and security auditing
       clang # C/C++ compiler
+      yt-dlp # Yt downloader
       bat # A cat clone with wings
       tealdeer # Tldr command
       ffmpeg # Video Stuff
       picocom # More serial coms
       screen # For serial coms
     ];
-
-    programs.neovim = {
-      enable = true;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
-    };
   };
 }

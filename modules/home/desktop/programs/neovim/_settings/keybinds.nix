@@ -3,7 +3,7 @@
     {
       key = "<leader>cd";
       mode = "n";
-      action = ":Ex";
+      action = ":Ex<CR>";
     }
   ];
 }

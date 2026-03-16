@@ -7,7 +7,7 @@
 
       ${primaryUser} = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "input" "networkmanager" ];
+        extraGroups = [ "wheel" "input" "networkmanager" "audio" ];
       };
     };
   };

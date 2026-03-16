@@ -8,6 +8,7 @@
     ]);
 
     homeManagerModules = with config.flake.modules.homeManager; [
+      core
       desktop
     ];
   };

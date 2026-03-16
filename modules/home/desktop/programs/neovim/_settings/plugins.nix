@@ -1,10 +1,10 @@
 {
   vim = {
-    lazy.plugins = {
-      smear-cursor.nvim = {
-        package = smear-cursor;
-      };
-    };
+#    lazy.plugins = {
+#      smear-cursor.nvim = {
+#        package = smear-cursor;
+#      };
+#    };
 
     autopairs.nvim-autopairs.enable = true;
     utility.undotree.enable = true;
@@ -13,7 +13,7 @@
     statusline.lualine = {
       enable = true;
     };
-    formatter.confirm-nvim = {
+    formatter.conform-nvim = {
       enable = true;
     };
     autocomplete.blink-cmp = {

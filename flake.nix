@@ -59,7 +59,12 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
+
+    stylix = {
+      url = "github:nix-community/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Nixpkgs vr override for the devs versions
     nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
 

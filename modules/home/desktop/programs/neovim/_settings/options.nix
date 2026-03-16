@@ -6,7 +6,7 @@
 
     clipboard = {
       enable = true;
-      register = "unnamedplus";
+      registers = "unnamedplus";
     };
   };
 }

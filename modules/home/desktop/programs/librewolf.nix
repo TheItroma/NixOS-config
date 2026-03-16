@@ -36,6 +36,7 @@
           tabliss
           darkreader
           pywalfox
+          firefox-color
           new-window-without-toolbar
 
           # QOL
