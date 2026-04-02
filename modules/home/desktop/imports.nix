@@ -13,6 +13,5 @@
     dwl
     nixcord
     neovim
-    theming
   ];
 }

@@ -28,9 +28,10 @@
           return-youtube-dislikes
           youtube-suite-search-fixer
           redirect-shorts-to-youtube
+          youtube-shorts-block
+          youtube-enhancer-vc
           multiselect-for-youtube
           videospeed
-          enhanced-h264ify
 
           # Looks
           tabliss

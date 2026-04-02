@@ -1,9 +1,10 @@
 {
-  flake.modules.nixos.core = { pkgs, ... }: {
+  flake.modules.nixos.core = {pkgs, ...}: {
     environment.systemPackages = with pkgs; [
       # Archive utils
       unzip
       zip
+      inetutils
 
       # Search and listing
       ripgrep # recursively searches directories for a regex pattern
@@ -21,7 +22,7 @@
 
       # Misc
       nmap # A utility for network discovery and security auditing
-      clang # C/C++ compiler
+      tinycc # A Tiny better C compiler
       yt-dlp # Yt downloader
       bat # A cat clone with wings
       tealdeer # Tldr command

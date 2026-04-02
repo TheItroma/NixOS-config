@@ -1,76 +1,81 @@
 {
-  flake.modules.homeManager.desktop-programs =
-    { pkgs, ... }: {
-      home.packages = with pkgs; [
-        # File managers
-        yazi
-        nemo
+  flake.modules.homeManager.desktop-programs = {pkgs, ...}: {
+    home.packages = with pkgs; [
+      # File managers
+      yazi
+      nemo
 
-        # Players
-        playerctl # CLI player controller
-        rmpc # Customizable rust mpd tui
-        mpd # Music player daemon
-        spotify # Music player deamon and interface
-        
-        # Privacy
-        tor-browser
+      # Players
+      playerctl # CLI player controller
+      rmpc # Customizable rust mpd tui
+      mpd # Music player daemon
+      spotify # Music player deamon and interface
 
-        # Wallpaper
-        swww
-        mpvpaper
+      # Privacy
+      tor-browser
 
-        # Programing
-        rustup
+      # Wallpaper
+      swww
+      mpvpaper
 
-        # Office
-        libreoffice-fresh
-        kdePackages.calligra
+      # Programing
+      rustup
 
-        # Graphics editor
-        #krita
-        inkscape
+      # Office
+      libreoffice-fresh
+      kdePackages.calligra
 
-        # Rice tui
-        cava
-        fastfetch
-        tty-clock
-        cmatrix
-        cbonsai
+      # Graphics editor
+      #krita
+      inkscape
 
-        # Game Dev
-        godot
-        unityhub
-        blender
+      # Rice tui
+      cava
+      fastfetch
+      tty-clock
+      cmatrix
+      cbonsai
 
-        # Viewers
-        zathura # PDF
-        nomacs # Image
+      # Game Dev
+      godot
+      unityhub
+      blender
 
-        # Automation
-        openrgb
-        wtype
+      # Viewers
+      zathura # PDF
+      nomacs # Image
 
-        # Video kdePackages.kdenlive # Editor
-        obs-studio # Capture
-        mpv # Player
+      # Automation
+      openrgb
+      wtype
 
-        # CAD
-        openscad-unstable
-        #freecad-wayland
+      # Video kdePackages.kdenlive # Editor
+      obs-studio # Capture
+      mpv # Player
 
-        cura-appimage # 3D printing slicer
-        dunst # Notifications
-        bluetui # bluetooth
-        rofi # Launcher
-        qbittorrent # Torrenting
-        cliphist # Clipboard
-        nix-output-monitor
-        weechat # Irc and Matrix tui
-        obsidian # Text editors
-        mumble # Voice chat client
-        wiremix # Simple TUI mixer for PipeWire
-        pass # Password manager
-        calligraphy # Does cool ASCII banners
-      ];
-    };
+      # CAD
+      openscad-unstable
+      #freecad-wayland
+
+      cura-appimage # 3D printing slicer
+      dunst # Notifications
+      bluetui # bluetooth
+      rofi # Launcher
+      qbittorrent # Torrenting
+      cliphist # Clipboard
+      nix-output-monitor
+      weechat # Irc and Matrix tui
+      obsidian # Text editors
+      mumble # Voice chat client
+      wiremix # Simple TUI mixer for PipeWire
+      pass # Password manager
+      calligraphy # Does cool ASCII banners
+      calcure # Tui Calendar with vim bindings
+      calcurse # The one on top or this one?
+      bagels # Tui expense tracker
+      asak # Tui audio recorder
+      kicad-unstable
+      ungoogled-chromium # for messenger
+    ];
+  };
 }

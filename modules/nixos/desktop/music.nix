@@ -1,7 +1,10 @@
 {
-  flake.modules.nixos.music = { inputs, pkgs, ... }: {
-
-    imports = [ inputs.musnix.nixosModules.musnix ];
+  flake.modules.nixos.music = {
+    inputs,
+    pkgs,
+    ...
+  }: {
+    imports = [inputs.musnix.nixosModules.musnix];
 
     musnix = {
       enable = false;
@@ -11,7 +14,9 @@
     environment.systemPackages = with pkgs; [
       # Daw
       reaper
+      zrythm
       ardour
+      qtractor
 
       # Synth
       surge-xt

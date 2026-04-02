@@ -1,6 +1,6 @@
-{ inputs, ... }: {
+{inputs, ...}: {
   flake.modules.homeManager.nixcord = {
-    imports = [ inputs.nixcord.homeModules.nixcord ];
+    imports = [inputs.nixcord.homeModules.nixcord];
     programs.nixcord = {
       enable = true;
       equibop = {
@@ -27,10 +27,10 @@
           relationshipNotifier.enable = true;
           fixSpotifyEmbeds.enable = true;
           youtubeAdblock.enable = true;
-	  clientTheme = {
-	    enable = true;
-	    color = "000000";
-	  };
+          clientTheme = {
+            enable = true;
+            color = "000000";
+          };
         };
       };
     };
