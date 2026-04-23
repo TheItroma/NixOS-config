@@ -1,9 +1,9 @@
 # My NixOS configuration!
 
-Bassically a ripoff of https://github.com/GaetanLepage/nix-config
+Basically a ripoff of https://github.com/GaetanLepage/nix-config
 
-As inspiered by https://github.com/n3oney/nixus (Seriously, check it out, its
-very well made tho a bit clutered imo)
+As inspired by https://github.com/n3oney/nixus (Seriously, check it out, its
+very well made tho a bit cluttered imo)
 
 **I will soon refactor** the config to use
 https://github.com/FlafyDev/combined-manager
