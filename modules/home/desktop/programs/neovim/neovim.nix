@@ -1,7 +1,8 @@
 {
-  flake.modules.homeManager.neovim = { inputs, ... }: {
-
-    #environment.variables.EDITOR = "${programs.nvf.finalPackage}/bin/nvim";
+  flake.modules.homeManager.neovim = {inputs, ...}: {
+    home.sessionVariables = {
+      EDITOR = "nvim";
+    };
 
     programs.nvf = {
       enable = true;

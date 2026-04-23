@@ -2,12 +2,13 @@
   flake.modules.nixos.music = {
     inputs,
     pkgs,
+    config,
     ...
   }: {
     imports = [inputs.musnix.nixosModules.musnix];
 
     musnix = {
-      enable = false;
+      enable = true;
       rtcqs.enable = true;
     };
 

@@ -1,4 +1,9 @@
-{ config, pkgs, inputs, ... }: {
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}: {
   flake.modules.homeManager.librewolf = {
     programs.librewolf = {
       enable = true;
@@ -14,7 +19,6 @@
           privateDefault = "ddg";
         };
         extensions.packages = with inputs.firefox-addons.packages."x86_64-linux"; [
-
           # Privacy and Security
           adnauseam
           facebook-container
@@ -37,6 +41,8 @@
           tabliss
           darkreader
           pywalfox
+          #doqment
+
           firefox-color
           new-window-without-toolbar
 
@@ -51,10 +57,10 @@
           tab-session-manager
           don-t-fuck-with-paste
           sidebery
-          
+
           # Languages
           yomitan
-          
+
           # Github
           enhanced-github
           refined-github

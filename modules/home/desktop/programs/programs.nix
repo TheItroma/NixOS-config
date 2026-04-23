@@ -68,13 +68,13 @@
       obsidian # Text editors
       mumble # Voice chat client
       wiremix # Simple TUI mixer for PipeWire
-      pass # Password manager
       calligraphy # Does cool ASCII banners
       calcure # Tui Calendar with vim bindings
       calcurse # The one on top or this one?
       bagels # Tui expense tracker
       asak # Tui audio recorder
       kicad-unstable
+      darktable
       ungoogled-chromium # for messenger
     ];
   };

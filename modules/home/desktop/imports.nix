@@ -1,6 +1,10 @@
-{ config, inputs, pkgs, ... }: {
+{
+  config,
+  inputs,
+  pkgs,
+  ...
+}: {
   flake.modules.homeManager.desktop.imports = with config.flake.modules.homeManager; [
-
     inputs.nvf.homeManagerModules.nvf
     inputs.stylix.homeModules.stylix
 
@@ -8,6 +12,7 @@
     hyprland
     kitty
     niri
+    mango
     desktop-programs
     wallpaper
     dwl

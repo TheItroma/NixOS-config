@@ -17,5 +17,16 @@
       desktop
       dev
     ];
+
+    #monitors = [
+    #  {
+    #    name = "HKC OVERSEAS LIMITED 27E6QC";
+    #    location = "DP-2";
+    #    width = 2560;
+    #    height = 1440;
+    #    refreshRate = "165.001";
+    #    isMain = true;
+    #  }
+    #];
   };
 }
