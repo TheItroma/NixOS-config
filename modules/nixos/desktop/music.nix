@@ -21,12 +21,14 @@
 
       # Synth
       surge-xt
+      vital
       zynaddsubfx
       yoshimi
 
       # FX
       calf
       eq10q
+      distrho-ports
       infamousPlugins
       wolf-shaper
       lsp-plugins

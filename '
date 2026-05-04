@@ -1,0 +1,67 @@
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}: let
+  system = "x86_64-linux";
+  inherit (lib.types) bool int float str attrs listOf submodule attrsOf;
+  inherit (lib) ElemAt mkOption;
+
+  mkOpt = options:
+    lib.mkOption {
+      type = ElemAt options 0;
+      default = ElemAt options 1;
+    };
+in {
+  options = {
+    wayland.windowManager.dwl = {
+      enable = mkOpt [bool false];
+
+      settings = {
+        tagcount = mkOpt [int 9];
+
+        monitors = {
+          type = listOf (submodule {
+            name = mkOpt [str builtins.null];
+            mfact = mkOpt [float 0.5];
+            nmaster = mkOpt [int 1];
+            scale = mkOpt [int 2];
+            layout = mkOpt [int 0];
+            x = mkOpt [int (-1)];
+            y = mkOpt [int (-1)];
+          });
+        };
+
+        binds = mkOption {
+          type = listOf attrs;
+        };
+
+        rules = mkOption {
+          type = listOf (submodule {
+            options = {
+              appid = mkOpt [str builtins.null];
+              title = mkOpt [str builtins.null];
+              tagmask = mkOpt [str builtins.null];
+              isfloating = mkOpt [bool false];
+              monitor = mkOpt [int (-1)];
+            };
+          });
+        };
+
+        appearance = {
+          sloppyfocus = mkOpt [bool true];
+          bypass_surface_visibility = mkOpt [bool false];
+          borderpx = mkOpt [int 1];
+
+          colors = {
+            root = mkOpt [str "0x222222ff"];
+            border = mkOpt [str "0x444444ff"];
+            focus = mkOpt [str "0x005577ff"];
+            urgent = mkOpt [str "0xff0000ff"];
+          };
+        };
+      };
+    };
+  };
+}

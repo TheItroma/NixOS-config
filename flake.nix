@@ -75,6 +75,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-flatpak = {
+      url = "github:gmodena/nix-flatpak";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Nixpkgs vr override for the devs versions
     nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
   };
