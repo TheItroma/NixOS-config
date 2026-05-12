@@ -4,8 +4,7 @@
   pkgs,
   ...
 }: let
-  system = "x86_64-linux";
-  inherit (lib.types) bool int float str attrs listOf submodule;
+  inherit (lib.types) bool int float str listOf submodule path attrs;
   inherit (lib) ElemAt mkOption;
 
   mkOpt = options:
@@ -15,6 +14,7 @@
     };
 
   cfg = config.wayland.windowManager.dwl.settings;
+  configHPath = "${config.home.homeDirectory}/.config/dwl/config.h";
 
   boolToInt = bool:
     if bool
@@ -25,10 +25,22 @@
     if value == builtins.null
     then "NULL"
     else "\"${value}\"";
+  #  patch = submodule {
+  #    options = {
+  #      name = mkOpt [str builtins.null];
+  #      config = mkOpt [attrs builtins.null];
+  #      patch = mkOption {
+  #        type = str;
+  #        description = "a patch to your patch so you can have more patches";
+  #      };
+  #    };
+  #  };
 in {
   options = {
     wayland.windowManager.dwl = {
       enable = mkOpt [bool false];
+
+      patcheDir = mkOpt [path builtins.null];
 
       settings = {
         tagcount = mkOpt [int 9];
@@ -243,167 +255,179 @@ in {
     };
     # Disclaimer : I used chatgpt to fill in all the "cfg.option" blanks, not the cleanest but oh well
     # (The concatMapStringsSep was terribly formated and didn't have the "nullToStr" helper :,( )
-    config.home.file.".config/dwl/config.h".text = ''
-      /* Taken from https://github.com/djpohly/dwl/issues/466 */
-      #define COLOR(hex)    { ((hex >> 24) & 0xFF) / 255.0f, \
-                              ((hex >> 16) & 0xFF) / 255.0f, \
-                              ((hex >> 8) & 0xFF) / 255.0f, \
-                              (hex & 0xFF) / 255.0f }
-      /* appearance */
-      static const int sloppyfocus = ${boolToInt cfg.appearance.sloppyfocus};
-      static const int bypass_surface_visibility = ${boolToInt cfg.appearance.bypass_surface_visibility};
-      static const unsigned int borderpx = ${toString cfg.appearance.borderpx};
+    config.home = lib.mkIf cfg.enable {
+      # There are more lines after the file definition...
+      file.".config/dwl/config.h".text = ''
+        /* Taken from https://github.com/djpohly/dwl/issues/466 */
+        #define COLOR(hex)    { ((hex >> 24) & 0xFF) / 255.0f, \
+                                ((hex >> 16) & 0xFF) / 255.0f, \
+                                ((hex >> 8) & 0xFF) / 255.0f, \
+                                (hex & 0xFF) / 255.0f }
+        /* appearance */
+        static const int sloppyfocus = ${boolToInt cfg.appearance.sloppyfocus};
+        static const int bypass_surface_visibility = ${boolToInt cfg.appearance.bypass_surface_visibility};
+        static const unsigned int borderpx = ${toString cfg.appearance.borderpx};
 
-      static const float rootcolor[]   = COLOR(${cfg.appearance.colors.root});
-      static const float bordercolor[] = COLOR(${cfg.appearance.colors.border});
-      static const float focuscolor[]  = COLOR(${cfg.appearance.colors.focus});
-      static const float urgentcolor[] = COLOR(${cfg.appearance.colors.urgent});
-
-
-      /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old behavior */
-      static const float fullscreen_bg[]         = {0.0f, 0.0f, 0.0f, 1.0f}; /* You can also use glsl colors */
-
-      /* tagging - TAGCOUNT must be no greater than 31 */
-      #define TAGCOUNT (${toString cfg.tagcount})
-
-      /* logging */
-      static int log_level = WLR_ERROR;
-
-      static const Rule rules[] = {
-      	/* app_id             title       tags mask     isfloating   monitor */
-      	{ "Gimp_EXAMPLE",     NULL,       0,            1,           -1 }, /* Start on currently visible tags floating, not tiled */
-      	{ "firefox_EXAMPLE",  NULL,       1 << 8,       0,           -1 }, /* Start on ONLY tag "9" */
-          /* default/example rule: can be changed but cannot be eliminated; at least one rule must exist */
-
-      ${lib.concatMapStringsSep
-        "\n"
-        (r: ''
-          {
-            ${nullToStr r.appid},
-            ${nullToStr r.title},
-            ${nullToStr r.tagmask},
-            ${boolToInt r.isfloating},
-            ${toString r.monitor}
-          },
-        '')
-        cfg.rules}
-      };
-
-      /* layout(s) */
-      static const Layout layouts[] = {
-      	/* symbol     arrange function */
-      	{ "[]=",      tile },
-      	{ "><>",      NULL },    /* no layout function means floating behavior */
-      	{ "[M]",      monocle },
-      };
-
-      /* monitors */
-      /* (x=-1, y=-1) is reserved as an "autoconfigure" monitor position indicator
-       * WARNING: negative values other than (-1, -1) cause problems with Xwayland clients due to
-       * https://gitlab.freedesktop.org/xorg/xserver/-/issues/899 */
-      static const MonitorRule monrules[] = {
-         /* name        mfact  nmaster scale layout       rotate/reflect                x    y
-          * example of a HiDPI laptop monitor:
-          { "eDP-1",    0.5f,  1,      2,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   -1,  -1 }, */
-      	{ NULL,       0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   -1,  -1 },
-      	/* default monitor rule: can be changed but cannot be eliminated; at least one monitor rule must exist */
-        ${lib.concatMapStringsSep
-        "\n"
-        (m: ''
-          {
-            ${nullToStr m.name},
-            ${toString m.mfact}f,
-            ${toString m.nmaster},
-            ${toString m.scale},
-            &layouts[${toString m.layout}],
-            WL_OUTPUT_TRANSFORM_NORMAL,
-            ${toString m.x},
-            ${toString m.y}
-          },
-        '')
-        cfg.monitors}
-      };
-
-      /* keyboard */
-      static const struct xkb_rule_names xkb_rules = {
-      	/* can specify fields: rules, model, layout, variant, options */
-      	/* example:
-      	.options = "ctrl:nocaps",
-      	*/
-        .options = NULL,
+        static const float rootcolor[]   = COLOR(${cfg.appearance.colors.root});
+        static const float bordercolor[] = COLOR(${cfg.appearance.colors.border});
+        static const float focuscolor[]  = COLOR(${cfg.appearance.colors.focus});
+        static const float urgentcolor[] = COLOR(${cfg.appearance.colors.urgent});
 
 
-        // TODO FOR NIXOS CONFIG ONLY : Need to implement that part
+        /* This conforms to the xdg-protocol. Set the alpha to zero to restore the old behavior */
+        static const float fullscreen_bg[]         = {0.0f, 0.0f, 0.0f, 1.0f}; /* You can also use glsl colors */
 
-      };
-      static const int repeat_rate = ${toString cfg.keyboard.repeat_rate};
-      static const int repeat_delay = ${toString cfg.keyboard.repeat_delay};
+        /* tagging - TAGCOUNT must be no greater than 31 */
+        #define TAGCOUNT (${toString cfg.tagcount})
 
-      /* Trackpad */
-      static const int tap_to_click = ${boolToInt cfg.trackpad.tap_to_click};
-      static const int tap_and_drag = ${boolToInt cfg.trackpad.tap_and_drag};
-      static const int drag_lock = ${boolToInt cfg.trackpad.drag_lock};
-      static const int natural_scrolling = ${boolToInt cfg.trackpad.natural_scrolling};
-      static const int disable_while_typing = ${boolToInt cfg.trackpad.disable_while_typing};
-      static const int left_handed = ${boolToInt cfg.trackpad.left_handed};
-      static const int middle_button_emulation = ${boolToInt cfg.trackpad.middle_button_emulation};
+        /* logging */
+        static int log_level = WLR_ERROR;
 
-      static const enum libinput_config_scroll_method scroll_method = ${cfg.libinput.scroll_method};
-      static const enum libinput_config_click_method click_method = ${cfg.libinput.click_method};
-      static const uint32_t send_events_mode = ${cfg.libinput.sent_events_mode};
-
-      static const enum libinput_config_accel_profile accel_profile = ${cfg.libinput.accel.profile};
-      static const double accel_speed = ${toString cfg.libinput.accel.speed};
-
-      /* You can choose between:
-      LIBINPUT_CONFIG_TAP_MAP_LRM -- 1/2/3 finger tap maps to left/right/middle
-      LIBINPUT_CONFIG_TAP_MAP_LMR -- 1/2/3 finger tap maps to left/middle/right
-      */
-      static const enum libinput_config_tap_button_map button_map = ${cfg.libinput.button_map};
-
-      /* helper
-      ${cfg.bindHelper}
-
-      static const Key keys[] = {
-
-      	/* Note that Shift changes certain key codes: 2 -> at, etc. */
-      	/* modifier                  key                  function          argument */
+        static const Rule rules[] = {
+        	/* app_id             title       tags mask     isfloating   monitor */
+        	{ "Gimp_EXAMPLE",     NULL,       0,            1,           -1 }, /* Start on currently visible tags floating, not tiled */
+        	{ "firefox_EXAMPLE",  NULL,       1 << 8,       0,           -1 }, /* Start on ONLY tag "9" */
+            /* default/example rule: can be changed but cannot be eliminated; at least one rule must exist */
 
         ${lib.concatMapStringsSep
-        "\n"
-        (k: ''
+          "\n"
+          (r: ''
+            {
+              ${nullToStr r.appid},
+              ${nullToStr r.title},
+              ${nullToStr r.tagmask},
+              ${boolToInt r.isfloating},
+              ${toString r.monitor}
+            },
+          '')
+          cfg.rules}
+        };
+
+        /* layout(s) */
+        static const Layout layouts[] = {
+        	/* symbol     arrange function */
+        	{ "[]=",      tile },
+        	{ "><>",      NULL },    /* no layout function means floating behavior */
+        	{ "[M]",      monocle },
+        };
+
+        /* monitors */
+        /* (x=-1, y=-1) is reserved as an "autoconfigure" monitor position indicator
+         * WARNING: negative values other than (-1, -1) cause problems with Xwayland clients due to
+         * https://gitlab.freedesktop.org/xorg/xserver/-/issues/899 */
+        static const MonitorRule monrules[] = {
+           /* name        mfact  nmaster scale layout       rotate/reflect                x    y
+            * example of a HiDPI laptop monitor:
+            { "eDP-1",    0.5f,  1,      2,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   -1,  -1 }, */
+        	{ NULL,       0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   -1,  -1 },
+        	/* default monitor rule: can be changed but cannot be eliminated; at least one monitor rule must exist */
+          ${lib.concatMapStringsSep
+          "\n"
+          (m: ''
+            {
+              ${nullToStr m.name},
+              ${toString m.mfact}f,
+              ${toString m.nmaster},
+              ${toString m.scale},
+              &layouts[${toString m.layout}],
+              WL_OUTPUT_TRANSFORM_NORMAL,
+              ${toString m.x},
+              ${toString m.y}
+            },
+          '')
+          cfg.monitors}
+        };
+
+        /* keyboard */
+        static const struct xkb_rule_names xkb_rules = {
+        	/* can specify fields: rules, model, layout, variant, options */
+        	/* example:
+        	.options = "ctrl:nocaps",
+        	*/
+          .options = NULL,
+
+
+          // TODO FOR NIXOS CONFIG ONLY : Need to implement that part
+
+        };
+        static const int repeat_rate = ${toString cfg.keyboard.repeat_rate};
+        static const int repeat_delay = ${toString cfg.keyboard.repeat_delay};
+
+        /* Trackpad */
+        static const int tap_to_click = ${boolToInt cfg.trackpad.tap_to_click};
+        static const int tap_and_drag = ${boolToInt cfg.trackpad.tap_and_drag};
+        static const int drag_lock = ${boolToInt cfg.trackpad.drag_lock};
+        static const int natural_scrolling = ${boolToInt cfg.trackpad.natural_scrolling};
+        static const int disable_while_typing = ${boolToInt cfg.trackpad.disable_while_typing};
+        static const int left_handed = ${boolToInt cfg.trackpad.left_handed};
+        static const int middle_button_emulation = ${boolToInt cfg.trackpad.middle_button_emulation};
+
+        static const enum libinput_config_scroll_method scroll_method = ${cfg.libinput.scroll_method};
+        static const enum libinput_config_click_method click_method = ${cfg.libinput.click_method};
+        static const uint32_t send_events_mode = ${cfg.libinput.sent_events_mode};
+
+        static const enum libinput_config_accel_profile accel_profile = ${cfg.libinput.accel.profile};
+        static const double accel_speed = ${toString cfg.libinput.accel.speed};
+
+        /* You can choose between:
+        LIBINPUT_CONFIG_TAP_MAP_LRM -- 1/2/3 finger tap maps to left/right/middle
+        LIBINPUT_CONFIG_TAP_MAP_LMR -- 1/2/3 finger tap maps to left/middle/right
+        */
+        static const enum libinput_config_tap_button_map button_map = ${cfg.libinput.button_map};
+
+        /* helper
+        ${cfg.bindHelper}
+
+        static const Key keys[] = {
+
+        	/* Note that Shift changes certain key codes: 2 -> at, etc. */
+        	/* modifier                  key                  function          argument */
+
+          ${lib.concatMapStringsSep
+          "\n"
+          (k: ''
+            {
+              ${k.modifier},
+              ${k.key},
+              ${k.function},
+              {${k.argument} },
+            },
+          '')
+          cfg.binds}
+
+          ${cfg.extraBinds}
+
+        /* Ctrl-Alt-Fx is used to switch to another VT, if you don't know what a VT is
+         * do not remove them.
+         */
+        #define CHVT(n) { WLR_MODIFIER_CTRL|WLR_MODIFIER_ALT,XKB_KEY_XF86Switch_VT_##n, chvt, {.ui = (n)} }
+        	CHVT(1), CHVT(2), CHVT(3), CHVT(4), CHVT(5), CHVT(6),
+        	CHVT(7), CHVT(8), CHVT(9), CHVT(10), CHVT(11), CHVT(12),
+        };
+
+        static const Button buttons[] = {
+          ${lib.concatMapStringsSep
+          "\n"
+          (k: ''
+            {
+              ${k.modifier},
+              ${k.key},
+              ${k.function},
+              {${k.argument} },
+            },
+          '')
+          cfg.buttons}
+        };
+      '';
+      packages = [
+        (
+          pkgs.callPackage ./package.nix
           {
-            ${k.modifier},
-            ${k.key},
-            ${k.function},
-            {${k.argument} },
-          },
-        '')
-        cfg.binds}
-
-        ${cfg.extraBinds}
-
-      /* Ctrl-Alt-Fx is used to switch to another VT, if you don't know what a VT is
-       * do not remove them.
-       */
-      #define CHVT(n) { WLR_MODIFIER_CTRL|WLR_MODIFIER_ALT,XKB_KEY_XF86Switch_VT_##n, chvt, {.ui = (n)} }
-      	CHVT(1), CHVT(2), CHVT(3), CHVT(4), CHVT(5), CHVT(6),
-      	CHVT(7), CHVT(8), CHVT(9), CHVT(10), CHVT(11), CHVT(12),
-      };
-
-      static const Button buttons[] = {
-        ${lib.concatMapStringsSep
-        "\n"
-        (k: ''
-          {
-            ${k.modifier},
-            ${k.key},
-            ${k.function},
-            {${k.argument} },
-          },
-        '')
-        cfg.buttons}
-      };
-    '';
+            configH = configHPath;
+            patches = config.wayland.windowManager.dwl.patcheDir;
+          }
+        )
+      ];
+    };
   };
 }

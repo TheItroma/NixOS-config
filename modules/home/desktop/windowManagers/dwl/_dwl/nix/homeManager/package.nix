@@ -34,6 +34,7 @@
   # Deprecated options
   # Remove them before next version of either Nixpkgs or dwl itself
   conf ? null,
+  patcheDir ? null,
 }:
 # If we set withCustomConfigH, let's not forget configH
 assert withCustomConfigH -> (configH != null);
@@ -41,12 +42,14 @@ assert withCustomConfigH -> (configH != null);
     pname = "dwl";
     version = "0.7";
 
-    src = fetchFromCodeberg {
-      owner = "dwl";
-      repo = "dwl";
-      rev = "v${finalAttrs.version}";
-      hash = "sha256-7SoCITrbMrlfL4Z4hVyPpjB9RrrjLXHP9C5t1DVXBBA=";
-    };
+    src = ./../..;
+
+    #src = fetchFromCodeberg {
+    #  owner = "dwl";
+    #  repo = "dwl";
+    #  rev = "v${finalAttrs.version}";
+    #  hash = "sha256-7SoCITrbMrlfL4Z4hVyPpjB9RrrjLXHP9C5t1DVXBBA=";
+    #};
 
     nativeBuildInputs = [
       installShellFiles
@@ -74,6 +77,8 @@ assert withCustomConfigH -> (configH != null);
       "out"
       "man"
     ];
+
+    patches = lib.filesystem.listFilesRecursive patcheDir;
 
     postPatch = let
       configFile =

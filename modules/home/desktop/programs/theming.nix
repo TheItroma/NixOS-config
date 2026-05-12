@@ -1,13 +1,15 @@
 {
-  flake.modules.homeManager.theming = { primaryUser, pkgs, ... }: {
-
+  flake.modules.homeManager.theming = {
+    primaryUser,
+    pkgs,
+    ...
+  }: {
     stylix = {
-
       enable = true;
-      image = /home/itroma/Downloads/image.jpg;
+      image = /home/itroma/Pictures/image.jpg;
       polarity = "dark";
 
-      targets.librewolf.profileNames = [ "default" ];
+      targets.librewolf.profileNames = ["default"];
     };
   };
 }

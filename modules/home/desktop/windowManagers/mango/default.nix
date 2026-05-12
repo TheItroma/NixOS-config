@@ -12,7 +12,6 @@
         monitorrule=name:^DP-2$,width:2560,height:1440,refresh:165.001,x:0,y:0
         # see back to gpu stuff
         numlockon=1
-        accel_profile=0
 
         # Visuals
         focused_opacity=0.9

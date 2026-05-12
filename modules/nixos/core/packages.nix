@@ -29,6 +29,7 @@
       ffmpeg # Video Stuff
       picocom # More serial coms
       screen # For serial coms
+      gcc # C compiler
     ];
   };
 }

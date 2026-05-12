@@ -15,7 +15,7 @@
     environment.systemPackages = with pkgs; [
       # Daw
       reaper
-      zrythm
+      audacity
       ardour
       qtractor
 
@@ -35,6 +35,10 @@
 
       # Samplers
       sfizz
+      fluidsynth
+
+      # Music Theory
+      coltrane
     ];
   };
 }

@@ -1,6 +1,12 @@
 {
   flake.modules.homeManager.desktop-programs = {pkgs, ...}: {
     home.packages = with pkgs; [
+      # Organisation
+      calcure # Tui Calendar with vim bindings
+      calcurse # The one on top or this one?
+      tomato-c # Simple pomodoro application
+      glow # CLI md viewer
+
       # File managers
       yazi
       nemo
@@ -15,7 +21,7 @@
       tor-browser
 
       # Wallpaper
-      swww
+      awww
       mpvpaper
 
       # Programing
@@ -57,11 +63,14 @@
       openscad-unstable
       #freecad-wayland
 
+      # Torrenting
+      qbittorrent # GUI
+      stig # CLI/TUI
+
       cura-appimage # 3D printing slicer
       dunst # Notifications
       bluetui # bluetooth
       rofi # Launcher
-      qbittorrent # Torrenting
       cliphist # Clipboard
       nix-output-monitor
       weechat # Irc and Matrix tui
@@ -69,11 +78,9 @@
       mumble # Voice chat client
       wiremix # Simple TUI mixer for PipeWire
       calligraphy # Does cool ASCII banners
-      calcure # Tui Calendar with vim bindings
-      calcurse # The one on top or this one?
       bagels # Tui expense tracker
       asak # Tui audio recorder
-      kicad-unstable
+      #kicad-unstable
       darktable
       ungoogled-chromium # for messenger
     ];

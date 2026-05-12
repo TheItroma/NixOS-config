@@ -11,14 +11,15 @@
     inputs.nix-flatpak.homeManagerModules.nix-flatpak
 
     librewolf
+    easyeffects
     flatpak
     hyprland
     kitty
     niri
     mango
+    theming
     desktop-programs
     wallpaper
-    dwl
     nixcord
     neovim
   ];

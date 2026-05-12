@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   vim = {
     extraPlugins = with pkgs.vimPlugins; {
       csvview-nvim = {
@@ -252,7 +256,41 @@
     };
 
     notes = {
-      neorg.enable = true;
+      neorg = {
+        enable = true;
+        setupOpts.load = {
+          "core.defaults" = {};
+          "core.completion" = {
+            config.engine = "nvim-cmp";
+          };
+          "core.concealer" = {};
+          "core.dirman" = {
+            config.workspaces.notes = "~/Documents/Norg";
+          };
+
+          "core.export" = {};
+
+          "core.export.markdown" = {};
+          "core.export.html" = {};
+
+          "core.latex.renderer" = {};
+
+          "core.presenter" = {
+            config.zen_mode = "zen-mode";
+          };
+          "core.summary" = {};
+          "core.text-objects" = {};
+          "core.autocommands" = {};
+          "core.clipboard" = {};
+          "core.highlights" = {};
+          "core.neorgcmd" = {};
+          "core.storage" = {};
+          "core.syntax" = {};
+          "core.tempus" = {};
+          "core.ui" = {};
+          "core.queries.native" = {};
+        };
+      };
       todo-comments.enable = true;
     };
 
