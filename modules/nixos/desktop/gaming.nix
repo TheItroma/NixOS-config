@@ -14,7 +14,7 @@
       # proton-ge-rtsp-bin # It was in the nixpkgs-xr overlay sooo
       protonup-qt # Just a gui for other proton installs
       umu-launcher # Proton using non-steam games https://lvra.gitlab.io/docs/games/vr-no-steam/
-      #lutris # The game manager
+      lutris # The game manager
       osu-lazer
       unciv
       deadlock-mod-manager

@@ -1,5 +1,26 @@
 {
   flake.modules.homeManager.hyprland = {
-    xdg.configFile."hypr/hyprland.conf".source = ./hyprland.conf;
+    services = {
+      hypridle = {
+        enable = true;
+      };
+
+      hyprsunset = {
+        enable = true;
+      };
+    };
+
+    wayland.windowManager.hyprland = {
+      enable = true;
+      xwayland.enable = true;
+
+      settings = {
+        "$mod" = "SUPER";
+
+        bind = [
+          #
+        ];
+      };
+    };
   };
 }
