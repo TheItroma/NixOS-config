@@ -1,6 +1,7 @@
 {
   flake.modules.homeManager.desktop-programs = {pkgs, ...}: {
     home.packages = with pkgs; [
+      spotify
       # Organisation
       calcure # Tui Calendar with vim bindings
       calcurse # The one on top or this one?
@@ -15,7 +16,7 @@
       playerctl # CLI player controller
       rmpc # Customizable rust mpd tui
       mpd # Music player daemon
-      spotify # Music player deamon and interface
+      #spotify # Music player deamon and interface
 
       # Privacy
       tor-browser
@@ -61,11 +62,12 @@
 
       # CAD
       openscad-unstable
-      #freecad-wayland
+      freecad-wayland
 
       # Torrenting
       qbittorrent # GUI
       stig # CLI/TUI
+      transmission_4
 
       cura-appimage # 3D printing slicer
       dunst # Notifications
@@ -80,7 +82,7 @@
       calligraphy # Does cool ASCII banners
       bagels # Tui expense tracker
       asak # Tui audio recorder
-      #kicad-unstable
+      kicad-unstable
       darktable
       ungoogled-chromium # for messenger
     ];

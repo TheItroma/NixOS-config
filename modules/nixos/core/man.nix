@@ -1,6 +1,6 @@
 {
   flake.modules.nixos.man = {pkgs, ...}: {
-    documentation.man.generateCaches = true;
+    documentation.man.cache.enable = false;
 
     environment.systemPackages = with pkgs; [
       linux-manual

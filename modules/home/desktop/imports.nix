@@ -17,7 +17,7 @@
     kitty
     niri
     mango
-    theming
+    #theming
     desktop-programs
     wallpaper
     nixcord

@@ -4,7 +4,7 @@
       # Archive utils
       unzip
       zip
-      inetutils
+      unar
 
       # Search and listing
       ripgrep # recursively searches directories for a regex pattern
@@ -22,6 +22,7 @@
 
       # Misc
       nmap # A utility for network discovery and security auditing
+      inetutils # Swiss knife of networking tools
       tinycc # A Tiny better C compiler
       yt-dlp # Yt downloader
       bat # A cat clone with wings
