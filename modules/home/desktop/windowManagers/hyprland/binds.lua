@@ -29,6 +29,13 @@ hl.bind(mod .. " + H", hl.dsp.focus({ direction = "r" }))
 hl.bind(mod .. " + J", hl.dsp.focus({ direction = "d" }))
 hl.bind(mod .. " + K", hl.dsp.focus({ direction = "u" }))
 hl.bind(mod .. " + L", hl.dsp.focus({ direction = "l" }))
+--
+-- Move window
+
+hl.bind(mod .. " + SHIFT + H", hl.dsp.window.move({ direction = "r" }))
+hl.bind(mod .. " + SHIFT + J", hl.dsp.window.move({ direction = "d" }))
+hl.bind(mod .. " + SHIFT + K", hl.dsp.window.move({ direction = "u" }))
+hl.bind(mod .. " + SHIFT + L", hl.dsp.window.move({ direction = "l" }))
 
 -- Workspaces 1-10
 
@@ -37,6 +44,17 @@ for i = 1, 10 do
 	hl.bind(mod .. " + " .. key, hl.dsp.focus({ workspace = i }))
 	hl.bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
 end
+
+-- Mouse
+
+hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+hl.bind(mod .. " + mouse:272", hl.dsp.window.resize(), { mouse = true })
+
+hl.bind(mod .. " + mouse_up", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind(mod .. " + mouse_down", hl.dsp.focus({ workspace = "e-1" }))
+
+hl.bind(mod .. " + SHIFT + mouse_up", hl.dsp.window.move({ workspace = "e+1" }))
+hl.bind(mod .. " + SHIFT + mouse_down", hl.dsp.window.move({ workspace = "e-1" }))
 
 -- Special workspace
 

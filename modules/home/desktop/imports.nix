@@ -16,6 +16,7 @@
     hyprland
     kitty
     niri
+    olivine
     mango
     #theming
     desktop-programs

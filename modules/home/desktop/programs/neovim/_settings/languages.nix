@@ -25,7 +25,7 @@
       nix.enable = true;
       python.enable = true;
       toml.enable = true;
-      ts.enable = true;
+      typescript.enable = true;
       typst.enable = true;
       xml.enable = true;
       zig.enable = true;

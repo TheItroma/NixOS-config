@@ -1,18 +1,20 @@
-require("animations")
-require("monitor")
-require("binds")
+hl.on("hyprland.start", function()
+	hl.exec_cmd("hyprsunset -t 3400k")
+	hl.exec_cmd("spotify")
+end)
 
 hl.config({
 	general = {
 		gaps_in = 2,
-		gaps_out = 1,
-		border_size = 4,
+		gaps_out = 2,
+		border_size = 5,
 
 		col = {
-			active_border = "rgba(000000)",
+			active_border = "rgba(00000000)",
 			inactive_border = "rgba(595959aa)",
 		},
-		layout = "master",
+
+		layout = "dwindle",
 		allow_tearing = false,
 		resize_on_border = false,
 		snap = {
@@ -21,8 +23,10 @@ hl.config({
 	},
 
 	decoration = {
-		rounding = 10,
+		rounding = 20,
 		rounding_power = 2,
+
+		border_part_of_window = false,
 
 		active_opacity = 0.85,
 		inactive_opacity = 0.75,
@@ -41,7 +45,7 @@ hl.config({
 		},
 
 		glow = {
-			enabled = true,
+			enabled = false,
 		},
 	},
 
@@ -50,5 +54,10 @@ hl.config({
 	},
 	misc = {
 		disable_hyprland_logo = true,
+	},
+	binds = {
+		scroll_event_delay = 100,
+		workspace_back_and_forth = true,
+		hide_special_on_workspace_change = true,
 	},
 })

@@ -85,6 +85,8 @@
       kicad-unstable
       darktable
       ungoogled-chromium # for messenger
+      miktex # Latex
+      imagemagick # need dat
     ];
   };
 }

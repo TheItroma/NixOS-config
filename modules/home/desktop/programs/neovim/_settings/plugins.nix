@@ -232,6 +232,9 @@
     };
 
     utility = {
+      snacks-nvim = {
+        enable = true;
+      };
       ccc.enable = true; # Color picker
       undotree.enable = true;
       diffview-nvim.enable = true;
@@ -250,7 +253,10 @@
       };
 
       images = {
-        image-nvim.enable = false; # Uhhhhh, lets see later if we want or not
+        image-nvim = {
+          enable = true;
+          setupOpts.backend = "kitty";
+        };
         img-clip.enable = true;
       };
     };
@@ -273,7 +279,12 @@
           "core.export.markdown" = {};
           "core.export.html" = {};
 
-          "core.latex.renderer" = {};
+          "core.latex.renderer" = {
+            config = {
+              render_on_enter = true;
+              min_length = 0;
+            };
+          };
 
           "core.presenter" = {
             config.zen_mode = "zen-mode";
@@ -361,7 +372,7 @@
       enable = true;
 
       formatOnSave = true;
-      harper-ls.enable = true;
+      presets.harper.enable = true;
       lspsaga.enable = false;
       nvim-docs-view.enable = true;
       otter-nvim.enable = true;

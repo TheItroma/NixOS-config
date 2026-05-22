@@ -3,7 +3,20 @@
     pkgs,
     lib,
     ...
-  }: {
+  }: let
+    mkFiles = dir: files:
+      builtins.listToAttrs (map (f: {
+          name = "${dir}/${lib.baseNameOf f}";
+          value.source = f;
+        })
+        files);
+  in {
+    home.file = mkFiles ".config/hypr" [
+      ./animations.lua
+      ./binds.lua
+      ./monitor.lua
+      ./settings.lua
+    ];
     services = {
       hypridle = {
         enable = true;
@@ -17,23 +30,13 @@
     wayland.windowManager.hyprland = {
       enable = true;
       xwayland.enable = true;
+      configType = "lua";
+      extraConfig = ''
+        require("animations")
+        require("monitor")
+        require("binds")
+        require("settings")
+      '';
     };
-    home.file = let
-      lua = [
-        ./hyprland.lua
-        ./animations.lua
-        ./binds.lua
-        ./monitor.lua
-      ];
-    in
-      builtins.listToAttrs (
-        map (e: {
-          name = ".config/hypr/${lib.baseNameOf e}";
-          value = {
-            source = e;
-          };
-        })
-        lua
-      );
   };
 }
