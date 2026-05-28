@@ -5,7 +5,9 @@
     ...
   }: {
     home.packages = [
-      (pkgs.callPackage ./package.nix {})
+      (pkgs.callPackage ./_package.nix {
+        customRC = ./rc.lua;
+      })
     ];
   };
 }

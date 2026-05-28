@@ -18,9 +18,11 @@
       audacity
       ardour
       qtractor
+      carla
 
       # Synth
       surge-xt
+      helm
       vital
       zynaddsubfx
       yoshimi
@@ -36,6 +38,9 @@
       # Samplers
       sfizz
       fluidsynth
+      linuxsampler
+      qsampler
+      polyphone
 
       # Music Theory
       coltrane

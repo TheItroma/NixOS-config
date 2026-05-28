@@ -1,6 +1,9 @@
 {inputs, ...}: {
-  flake.modules.homeManager.nixcord = {
+  flake.modules.homeManager.nixcord = {pkgs, ...}: {
     imports = [inputs.nixcord.homeModules.nixcord];
+    home.packages = with pkgs; [
+      discordchatexporter-cli
+    ];
     programs.nixcord = {
       enable = true;
       equibop = {

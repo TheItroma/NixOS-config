@@ -32,14 +32,11 @@
       libreoffice-fresh
       kdePackages.calligra
 
-      # Graphics editor
-      #krita
-      inkscape
-
       # Rice tui
       cava
       fastfetch
       tty-clock
+      clock-rs
       cmatrix
       cbonsai
 
@@ -69,6 +66,14 @@
       stig # CLI/TUI
       transmission_4
 
+      # Image stuff
+      gimp
+      imagemagick # need dat
+      exiftool # Metadata tool
+      darktable # Photographer tool for image editing
+      krita
+      inkscape
+
       cura-appimage # 3D printing slicer
       dunst # Notifications
       bluetui # bluetooth
@@ -76,17 +81,14 @@
       cliphist # Clipboard
       nix-output-monitor
       weechat # Irc and Matrix tui
-      obsidian # Text editors
       mumble # Voice chat client
       wiremix # Simple TUI mixer for PipeWire
       calligraphy # Does cool ASCII banners
       bagels # Tui expense tracker
       asak # Tui audio recorder
       kicad-unstable
-      darktable
       ungoogled-chromium # for messenger
       miktex # Latex
-      imagemagick # need dat
     ];
   };
 }

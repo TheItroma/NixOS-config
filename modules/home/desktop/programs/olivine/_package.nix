@@ -3,8 +3,9 @@
   stdenv,
   fetchFromGitLab,
   ncurses,
-  lua5_5,
   gnumake,
+  makeWrapper,
+  customRC ? null,
 }:
 stdenv.mkDerivation {
   pname = "olivine";
@@ -13,18 +14,18 @@ stdenv.mkDerivation {
   src = fetchFromGitLab {
     owner = "Oglo12";
     repo = "olivine";
-    rev = "dev";
-    sha256 = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+    rev = "refs/heads/dev";
+    sha256 = "sha256-2QXPP/hyRjPB5c9b8QwvXNSyy5lunfJimlIGMt9l+j4=";
 
     fetchSubmodules = true;
   };
 
   nativeBuildInputs = [
     gnumake
+    makeWrapper
   ];
 
   buildInputs = [
-    lua5_5
     ncurses
   ];
 
@@ -39,22 +40,35 @@ stdenv.mkDerivation {
     mkdir -p $out/share/olivine
     mkdir -p $out/share/lua/5.5
 
-    install -D olv $out/bin/olv-ncurses
+    # wat da hail is that
+    install -D build/olv $out/bin/olv-ncurses
     ln -s $out/bin/olv-ncurses $out/bin/olv
 
+    rcFile=${
+      if (customRC != null && builtins.isPath customRC)
+      then customRC
+      else ./default_rc.lua
+    }
     install -D default_rc.lua $out/share/olivine/rc.lua
 
-    cp -r olvstd $out/share/lua/5.5/
+    cp -r olvstd $out/share/olivine/olvstd/
+  '';
+
+  postFixup = ''
+    # that too
+    wrapProgram $out/bin/olv-ncurses \
+      --run "cd $out/share/olivine"
   '';
 
   meta = {
     homepage = "https://gitlab.com/Oglo12/olivine/-/tree/dev";
     description = "A C and lua text editor where everything is a buffer. No AI";
+
     longDescription = ''
       A powerful text editor written in C and configured with Lua.
       At the heart of it all, the idea that EVERYTHING is a buffer.
     '';
-    license = lib.licenses.gplOnly;
+    license = lib.licenses.gpl1Only;
     maintainers = [];
     mainProgram = "olv";
   };
