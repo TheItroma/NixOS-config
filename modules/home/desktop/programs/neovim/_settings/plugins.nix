@@ -238,10 +238,6 @@
       ccc.enable = true; # Color picker
       undotree.enable = true;
       diffview-nvim.enable = true;
-      yanky-nvim = {
-        enable = true;
-        setupOpts.ring.storage = "sqlite";
-      };
       icon-picker.enable = true;
       surround.enable = true;
       smart-splits.enable = true;

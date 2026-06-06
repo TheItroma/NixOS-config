@@ -11,7 +11,6 @@
       enableTreesitter = true;
 
       bash.enable = true;
-      clang.enable = true;
       cmake.enable = true;
       csharp.enable = true;
       css.enable = true;
@@ -29,6 +28,11 @@
       typst.enable = true;
       xml.enable = true;
       zig.enable = true;
+
+      clang = {
+        enable = true;
+        cHeader = true;
+      };
 
       rust = {
         enable = true;

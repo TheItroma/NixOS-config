@@ -3,6 +3,7 @@
     inputs,
     pkgs,
     config,
+    lib,
     ...
   }: {
     imports = [inputs.musnix.nixosModules.musnix];
@@ -37,10 +38,20 @@
 
       # Samplers
       sfizz
+      sfizz-ui
       fluidsynth
       linuxsampler
       qsampler
-      polyphone
+      (pkgs.polyphone.overrideAttrs (_: {
+        version = "2.6.0";
+
+        src = pkgs.fetchFromGitHub {
+          owner = "davy7125";
+          repo = "polyphone";
+          rev = "2.6.0";
+          hash = "sha256-JOSc1LWW7YWENDcssX9+faWwXZIlIacAiyZNzVOaTHY=";
+        };
+      }))
 
       # Music Theory
       coltrane

@@ -1,5 +1,13 @@
 {
-  flake.modules.homeManager.neovim = {inputs, ...}: {
+  flake.modules.homeManager.neovim = {
+    inputs,
+    pkgs,
+    ...
+  }: {
+    home.packages = with pkgs; [
+      norgolith
+    ];
+
     home.sessionVariables = {
       EDITOR = "nvim";
     };
