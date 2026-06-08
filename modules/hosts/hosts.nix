@@ -1,40 +1,72 @@
-{ inputs, lib, config, ... }:
-
-let
+{
+  inputs,
+  lib,
+  config,
+  ...
+}: let
   inherit (lib) types mkOption mapAttrs;
 
-  baseHostModule = { config, name, ... }: {
+  baseHostModule = {
+    config,
+    name,
+    ...
+  }: {
     options = {
-      system = mkOption {type = types.str; default = "x86_64-linux"; };
-      modules = mkOption { type = with types; listOf deferredModule; default = [ ]; };
-      primaryUser = mkOption { type = types.str; default = "itroma"; };
-      specialArgs = mkOption { type = types.attrsOf types.anything; default = { }; };
-      nixpkgs = mkOption { type = types.pathInStore; };
-      pkgs = mkOption { type = types.pkgs; };
+      system = mkOption {
+        type = types.str;
+        default = "x86_64-linux";
+      };
+      modules = mkOption {
+        type = with types; listOf deferredModule;
+        default = [];
+      };
+      primaryUser = mkOption {
+        type = types.str;
+        default = "itroma";
+      };
+      specialArgs = mkOption {
+        type = types.attrsOf types.anything;
+        default = {};
+      };
+      nixpkgs = mkOption {type = types.pathInStore;};
+      pkgs = mkOption {type = types.pkgs;};
     };
 
     config = {
       nixpkgs = inputs.nixpkgs;
-      pkgs = import config.nixpkgs { inherit (config) system; config.allowUnfree = true; };
-      specialArgs = { inherit inputs; inherit (config) primaryUser; };
+
+      pkgs = import config.nixpkgs {
+        inherit (config) system;
+        config.allowUnfree = true;
+        overlays = [inputs.nur.overlays.default];
+      };
+
+      specialArgs = {
+        inherit inputs;
+        inherit (config) primaryUser;
+      };
     };
   };
 
-  homeManagerModule = { config, name, ... }: {
+  homeManagerModule = {
+    config,
+    name,
+    ...
+  }: {
     options = {
       homeManagerModules = mkOption {
         type = with types; listOf deferredModule;
-        default = [ ];
+        default = [];
       };
     };
 
     config = {
       modules = [
         (
-          { primaryUser, ... }:
-          lib.optionalAttrs (config.homeManagerModules != [ ]) {
-            home-manager.users.${primaryUser}.imports = config.homeManagerModules;
-          }
+          {primaryUser, ...}:
+            lib.optionalAttrs (config.homeManagerModules != []) {
+              home-manager.users.${primaryUser}.imports = config.homeManagerModules;
+            }
         )
       ];
     };
@@ -45,17 +77,16 @@ let
     homeManagerModule
     # The line above is simply allowing the top level host configuration to import modules.
     # Since we are using the NixOS home-manager module, the actual definition is in nixos/core.
-    ({ name, ... }: {
-
+    ({name, ...}: {
       modules = [
         config.flake.modules.nixos.core
-        { networking.hostName = name; }
+        {networking.hostName = name;}
       ];
     })
   ];
 in {
   options = {
-    nixosHosts = mkOption { type = types.attrsOf hostTypeNixos; };
+    nixosHosts = mkOption {type = types.attrsOf hostTypeNixos;};
   };
 
   config.flake = {
@@ -64,6 +95,7 @@ in {
         options.nixpkgs.lib.nixosSystem {
           inherit (options) system modules specialArgs;
         };
-    in mapAttrs mkHost config.nixosHosts;
+    in
+      mapAttrs mkHost config.nixosHosts;
   };
 }

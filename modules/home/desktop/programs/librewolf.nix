@@ -10,6 +10,7 @@
       policies = {
         DisplayBookmarksToolbar = "never";
       };
+
       profiles.default = {
         isDefault = true;
 
@@ -18,7 +19,8 @@
           default = "ddg";
           privateDefault = "ddg";
         };
-        extensions.packages = with inputs.firefox-addons.packages."x86_64-linux"; [
+
+        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
           # Privacy and Security
           adnauseam
           facebook-container

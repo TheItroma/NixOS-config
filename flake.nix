@@ -40,6 +40,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nur = {
+      url = "github:nix-community/NUR";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     firefox-addons = {
       url = "github:nix-community/nur-combined?dir=repos/rycee/pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";

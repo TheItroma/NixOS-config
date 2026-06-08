@@ -1,8 +1,13 @@
 {
-  flake.modules.nixos.home-manager = { config, primaryUser, inputs, ... }: {
+  flake.modules.nixos.home-manager = {
+    config,
+    primaryUser,
+    inputs,
+    ...
+  }: {
     home-manager = {
-#      useGlobalPkgs = true;
-#      useUserPackages = true;
+      useGlobalPkgs = true;
+      useUserPackages = true;
 
       users.${primaryUser} = {
         home.stateVersion = "26.05";
@@ -14,10 +19,10 @@
       };
     };
 
-	#    specialArgs = {
-	#      inherit primaryUser inputs;
-	#      configName = "${primaryUser}";
-	#      nhSwitchCommand = "nh os switch";
-	#    };
+    #    specialArgs = {
+    #      inherit primaryUser inputs;
+    #      configName = "${primaryUser}";
+    #      nhSwitchCommand = "nh os switch";
+    #    };
   };
 }
