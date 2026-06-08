@@ -38,7 +38,6 @@
       pkgs = import config.nixpkgs {
         inherit (config) system;
         config.allowUnfree = true;
-        overlays = [inputs.nur.overlays.default];
       };
 
       specialArgs = {

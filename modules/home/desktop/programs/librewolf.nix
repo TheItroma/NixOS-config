@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  inputs,
-  ...
-}: {
+{inputs, ...}: {
   flake.modules.homeManager.librewolf = {
     programs.librewolf = {
       enable = true;
@@ -20,7 +15,7 @@
           privateDefault = "ddg";
         };
 
-        extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
+        extensions.packages = with inputs.firefox-addons.packages."x86_64-linux"; [
           # Privacy and Security
           adnauseam
           facebook-container
@@ -40,7 +35,7 @@
           videospeed
 
           # Looks
-          tabliss
+          tablissng
           darkreader
           pywalfox
           #doqment

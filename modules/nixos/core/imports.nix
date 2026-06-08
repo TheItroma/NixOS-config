@@ -10,6 +10,7 @@
     sops
     man
     ssh-server
+    nur
     bootloader
     users
     nix
